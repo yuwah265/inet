@@ -103,6 +103,8 @@ void MoBANLocal::setTargetPosition()
 
 void MoBANLocal::refreshDisplay() const
 {
+    //FIXME redesign for use the LineSegmentsMobilityBase::refreshDisplay();
+    //     LineSegmentsMobilityBase::refreshDisplay() uses lastPosition and not lastPosition+coordinatorPosition
     if (hasGUI() && visualRepresentation) {
         Coord coordinatorPosition = coordinator->getCurrentPosition();
         visualRepresentation->getDisplayString().setTagArg("p", 0, lastPosition.x + coordinatorPosition.x);
@@ -121,8 +123,8 @@ void MoBANLocal::setMoBANParameters(Coord referencePoint, double radius, double 
     this->referencePosition = referencePoint;
     this->radius = radius;
     this->speed = speed;
-    setTargetPosition();
-    lastSpeed = (targetPosition - lastPosition) / (nextChange - simTime()).dbl();
+    moveAndUpdate();
+    doSetTargetPosition();
     scheduleUpdate();
 }
 

@@ -100,7 +100,8 @@ void MoBANCoordinator::initialize(int stage)
                 throw cRuntimeError("MoBAN Coordinator: error in reading the input mobility pattern file");
 
 
-        lastPosition = selectDestination();
+        segmentStartPosition = targetPosition = lastPosition = selectDestination();
+        lastUpdate = simTime();
         publishToNodes();
         computeMaxSpeed();
     }
@@ -151,6 +152,8 @@ void MoBANCoordinator::setTargetPosition()
     }
     else {
         targetPosition = lastPosition;
+        lastSpeed = Coord::ZERO;
+        speed = 0;
         if (useMobilityPattern)
             duration = mobilityPattern[currentPattern].duration;
         else
@@ -172,6 +175,7 @@ void MoBANCoordinator::setTargetPosition()
 
 void MoBANCoordinator::refreshDisplay() const
 {
+    LineSegmentsMobilityBase::refreshDisplay();
     //show posture name in the graphical interface
     char dis_str[100];
     sprintf(dis_str, "%s until %f", currentPosture->getPostureName(), nextChange.dbl());
