@@ -68,7 +68,6 @@ void MoBANLocal::initialize(int stage)
     }
     else if (stage == INITSTAGE_PHYSICAL_ENVIRONMENT_2)
     {
-        updateVisualRepresentation();
         computeMaxSpeed();
     }
 }
@@ -102,7 +101,7 @@ void MoBANLocal::setTargetPosition()
     }
 }
 
-void MoBANLocal::updateVisualRepresentation()
+void MoBANLocal::refreshDisplay() const
 {
     if (hasGUI() && visualRepresentation) {
         Coord coordinatorPosition = coordinator->getCurrentPosition();

@@ -20,7 +20,6 @@ namespace inet {
 RotatingMobilityBase::RotatingMobilityBase()
 {
     rotateTimer = nullptr;
-    updateInterval = 0;
     stationary = false;
     lastUpdate = 0;
     nextChange = -1;
@@ -38,7 +37,6 @@ void RotatingMobilityBase::initialize(int stage)
     EV_TRACE << "initializing RotatingMobilityBase stage " << stage << endl;
     if (stage == INITSTAGE_LOCAL) {
         rotateTimer = new cMessage("rotate");
-        updateInterval = par("updateInterval");
     }
 }
 
@@ -56,7 +54,6 @@ void RotatingMobilityBase::rotateAndUpdate()
         rotate();
         lastUpdate = simTime();
         emitMobilityStateChangedSignal();
-        updateVisualRepresentation();
     }
 }
 
@@ -69,18 +66,7 @@ void RotatingMobilityBase::handleSelfMessage(cMessage *message)
 void RotatingMobilityBase::scheduleUpdate()
 {
     cancelEvent(rotateTimer);
-    if (!stationary && updateInterval != 0) {
-        // periodic update is needed
-        simtime_t nextUpdate = simTime() + updateInterval;
-        if (nextChange != -1 && nextChange < nextUpdate)
-            // next change happens earlier than next update
-            scheduleAt(nextChange, rotateTimer);
-        else
-            // next update happens earlier than next change or there is no change at all
-            scheduleAt(nextUpdate, rotateTimer);
-    }
-    else if (nextChange != -1)
-        // no periodic update is needed
+    if (nextChange != -1)
         scheduleAt(nextChange, rotateTimer);
 }
 

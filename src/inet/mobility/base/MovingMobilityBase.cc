@@ -26,7 +26,6 @@ namespace inet {
 
 MovingMobilityBase::MovingMobilityBase() :
     moveTimer(nullptr),
-    updateInterval(0),
     stationary(false),
     lastSpeed(Coord::ZERO),
     lastUpdate(0),
@@ -45,7 +44,6 @@ void MovingMobilityBase::initialize(int stage)
     EV_TRACE << "initializing MovingMobilityBase stage " << stage << endl;
     if (stage == INITSTAGE_LOCAL) {
         moveTimer = new cMessage("move");
-        updateInterval = par("updateInterval");
     }
 }
 
@@ -69,7 +67,6 @@ void MovingMobilityBase::moveAndUpdate()
         lastOrientation.gamma = 0.0;
         lastUpdate = simTime();
         emitMobilityStateChangedSignal();
-        updateVisualRepresentation();
     }
 }
 
@@ -82,18 +79,7 @@ void MovingMobilityBase::handleSelfMessage(cMessage *message)
 void MovingMobilityBase::scheduleUpdate()
 {
     cancelEvent(moveTimer);
-    if (!stationary && updateInterval != 0) {
-        // periodic update is needed
-        simtime_t nextUpdate = simTime() + updateInterval;
-        if (nextChange != -1 && nextChange < nextUpdate)
-            // next change happens earlier than next update
-            scheduleAt(nextChange, moveTimer);
-        else
-            // next update happens earlier than next change or there is no change at all
-            scheduleAt(nextUpdate, moveTimer);
-    }
-    else if (nextChange != -1)
-        // no periodic update is needed
+    if (nextChange != -1)
         scheduleAt(nextChange, moveTimer);
 }
 

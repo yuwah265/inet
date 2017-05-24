@@ -26,11 +26,6 @@ class INET_API RotatingMobilityBase : public MobilityBase
     /** @brief The message used for mobility state changes. */
     cMessage *rotateTimer;
 
-    /** @brief The simulation time interval used to regularly signal mobility state changes.
-     *
-     * The 0 value turns off the signal. */
-    simtime_t updateInterval;
-
     /** @brief A mobility model may decide to become stationary at any time.
      *
      * The true value disables sending self messages. */

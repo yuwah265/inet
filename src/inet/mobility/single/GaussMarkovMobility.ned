@@ -33,6 +33,7 @@ simple GaussMarkovMobility extends MovingMobilityBase
         double speed @unit(mps);
         double angle @unit(deg) = default(uniform(0deg, 360deg));
         double variance;
+        double updateInterval @unit(s) = default(0.1s);
         int margin @unit(m);
         @class(GaussMarkovMobility);
 }

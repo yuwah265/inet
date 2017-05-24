@@ -87,7 +87,7 @@ class INET_API MoBANLocal : public LineSegmentsMobilityBase
 
     virtual void setTargetPosition() override;
 
-    virtual void updateVisualRepresentation() override;
+    virtual void refreshDisplay() const override;
 
     virtual void computeMaxSpeed();
   public:

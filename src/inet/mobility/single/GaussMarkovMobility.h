@@ -35,6 +35,7 @@ class INET_API GaussMarkovMobility : public LineSegmentsMobilityBase
     double speed;    ///< speed of the host
     double angle;    ///< angle of linear motion
     double alpha;    ///< alpha parameter
+    simtime_t updateInterval;
     int margin;    ///< margin at which the host gets repelled from the border
     double speedMean;    ///< speed mean
     double angleMean;    ///< angle mean

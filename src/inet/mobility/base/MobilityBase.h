@@ -108,7 +108,7 @@ class INET_API MobilityBase : public cSimpleModule, public IMobility
     virtual void handleSelfMessage(cMessage *msg) = 0;
 
     /** @brief Moves the visual representation module's icon to the new position on the screen. */
-    virtual void updateVisualRepresentation();
+    virtual void refreshDisplay() const override;
 
     /** @brief Emits a signal with the updated mobility state. */
     virtual void emitMobilityStateChangedSignal();

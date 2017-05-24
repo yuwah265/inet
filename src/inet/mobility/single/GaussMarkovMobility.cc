@@ -43,6 +43,7 @@ void GaussMarkovMobility::initialize(int stage)
         speedMean = par("speed");
         angleMean = par("angle");
         alpha = par("alpha");
+        updateInterval = par("updateInterval");
         margin = par("margin");
         variance = par("variance");
         angle = fmod(angle, 360);
