@@ -40,7 +40,14 @@ class INET_API LineSegmentsMobilityBase : public MovingMobilityBase
     /** @brief End position of current linear movement. */
     Coord targetPosition;
 
+    /** @brief End position of current linear movement. */
+    Coord segmentStartPosition;
+
+    /** @brief End position of current linear movement. */
+    simtime_t segmentStartTime;
+
   protected:
+    virtual void initialize(int stage) override;
     virtual void initializePosition() override;
 
     virtual void move() override;
@@ -52,6 +59,8 @@ class INET_API LineSegmentsMobilityBase : public MovingMobilityBase
      * sequence, it should set nextChange to -1.
      */
     virtual void setTargetPosition() = 0;
+
+    void doSetTargetPosition();
 
   public:
     LineSegmentsMobilityBase();

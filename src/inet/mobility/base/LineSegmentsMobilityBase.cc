@@ -25,14 +25,23 @@ LineSegmentsMobilityBase::LineSegmentsMobilityBase()
     targetPosition = Coord::ZERO;
 }
 
+void LineSegmentsMobilityBase::initialize(int stage)
+{
+    MovingMobilityBase::initialize(stage);
+    EV_TRACE << "initializing LineSegmentsMobilityBase stage " << stage << endl;
+    if (stage == INITSTAGE_LOCAL) {
+        WATCH(targetPosition);
+        WATCH(segmentStartPosition);
+        WATCH(segmentStartTime);
+    }
+}
+
 void LineSegmentsMobilityBase::initializePosition()
 {
     MobilityBase::initializePosition();
     simtime_t now = simTime();
     if (!stationary) {
-        setTargetPosition();
-        EV_INFO << "current target position = " << targetPosition << ", next change = " << nextChange << endl;
-        lastSpeed = (targetPosition - lastPosition) / (nextChange - now).dbl();
+        doSetTargetPosition();
     }
     lastUpdate = now;
     scheduleUpdate();
@@ -43,16 +52,30 @@ void LineSegmentsMobilityBase::move()
     simtime_t now = simTime();
     if (now == nextChange) {
         lastPosition = targetPosition;
+        lastUpdate = now;
         EV_INFO << "reached current target position = " << lastPosition << endl;
-        setTargetPosition();
-        EV_INFO << "new target position = " << targetPosition << ", next change = " << nextChange << endl;
-        lastSpeed = (targetPosition - lastPosition) / (nextChange - now).dbl();
+        doSetTargetPosition();
     }
     else if (now > lastUpdate) {
         ASSERT(nextChange == -1 || now < nextChange);
-        lastPosition += lastSpeed * (now - lastUpdate).dbl();
+        if (nextChange == -1 ) {
+            lastPosition = segmentStartPosition + lastSpeed * (now - segmentStartTime).dbl();
+        }
+        else {
+            double alpha = (now - segmentStartTime) / (nextChange - segmentStartTime);  //FIXME case of nextChange == -1
+            lastPosition = segmentStartPosition * (1 - alpha) + targetPosition * alpha;
+        }
         lastUpdate = now;
     }
+}
+
+void LineSegmentsMobilityBase::doSetTargetPosition()
+{
+    setTargetPosition();
+    segmentStartPosition = lastPosition;
+    segmentStartTime = simTime();
+    lastSpeed = (nextChange == -1.0) ? Coord::ZERO : (targetPosition - segmentStartPosition) / (nextChange - segmentStartTime).dbl();
+    EV_INFO << "current target position = " << targetPosition << ", next change = " << nextChange << endl;
 }
 
 } // namespace inet
