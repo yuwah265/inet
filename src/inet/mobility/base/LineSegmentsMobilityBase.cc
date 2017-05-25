@@ -50,6 +50,7 @@ void LineSegmentsMobilityBase::move()
     else if (now > lastUpdate) {
         ASSERT(nextChange == -1 || now < nextChange);
         lastPosition += lastSpeed * (now - lastUpdate).dbl();
+        lastUpdate = now;
     }
 }
 
