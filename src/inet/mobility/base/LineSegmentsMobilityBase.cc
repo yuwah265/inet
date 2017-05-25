@@ -28,12 +28,13 @@ LineSegmentsMobilityBase::LineSegmentsMobilityBase()
 void LineSegmentsMobilityBase::initializePosition()
 {
     MobilityBase::initializePosition();
+    simtime_t now = simTime();
     if (!stationary) {
         setTargetPosition();
         EV_INFO << "current target position = " << targetPosition << ", next change = " << nextChange << endl;
-        lastSpeed = (targetPosition - lastPosition) / (nextChange - simTime()).dbl();
+        lastSpeed = (targetPosition - lastPosition) / (nextChange - now).dbl();
     }
-    lastUpdate = simTime();
+    lastUpdate = now;
     scheduleUpdate();
 }
 
@@ -45,7 +46,7 @@ void LineSegmentsMobilityBase::move()
         EV_INFO << "reached current target position = " << lastPosition << endl;
         setTargetPosition();
         EV_INFO << "new target position = " << targetPosition << ", next change = " << nextChange << endl;
-        lastSpeed = (targetPosition - lastPosition) / (nextChange - simTime()).dbl();
+        lastSpeed = (targetPosition - lastPosition) / (nextChange - now).dbl();
     }
     else if (now > lastUpdate) {
         ASSERT(nextChange == -1 || now < nextChange);
