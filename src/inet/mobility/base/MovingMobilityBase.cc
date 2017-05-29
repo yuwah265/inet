@@ -44,6 +44,10 @@ void MovingMobilityBase::initialize(int stage)
     EV_TRACE << "initializing MovingMobilityBase stage " << stage << endl;
     if (stage == INITSTAGE_LOCAL) {
         moveTimer = new cMessage("move");
+        WATCH(stationary);
+        WATCH(lastSpeed);
+        WATCH(lastUpdate);
+        WATCH(nextChange);
     }
 }
 
