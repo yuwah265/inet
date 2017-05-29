@@ -72,7 +72,7 @@ void MassMobility::move()
     }
     else if (now > lastUpdate) {
         ASSERT(nextChange == -1 || now < nextChange);
-        double alpha = (now - previousChange) / (nextChange - previousChange);
+        double alpha = (now - previousChange) / (nextChange - previousChange);  //FIXME case of nextChange == -1
         lastPosition = sourcePosition * (1 - alpha) + targetPosition * alpha;
         double dummyAngle;
         handleIfOutside(REFLECT, lastPosition, lastSpeed, dummyAngle);
