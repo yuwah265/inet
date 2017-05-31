@@ -18,6 +18,9 @@
 
 package inet.examples.mobility;
 
+import inet.visualizer.integrated.IntegratedVisualizer;
+
+
 network MobileNetwork
 {
     parameters:
@@ -27,5 +30,9 @@ network MobileNetwork
         host[numHosts]: MobileHost {
             parameters:
                 @display("p=300,300;r=,,#707070");
+        }
+        visualizer: IntegratedVisualizer {
+            parameters:
+                @display("p=100,50");
         }
 }

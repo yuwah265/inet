@@ -43,6 +43,7 @@
 package inet.examples.mobility;
 
 import inet.mobility.group.MoBANCoordinator;
+import inet.visualizer.integrated.IntegratedVisualizer;
 
 
 //
@@ -55,7 +56,7 @@ network MoBANNetwork
     parameters:
         double numNodes; // total number of nodes in the network, either ordinary nodes or WBAN nodes
         int numMoBAN; // total number of MoBAN coordinators (WBAN instances)
-        @display("bgb=1000,1000,white;bgp=0,0");
+        @display("bgb=1000,1000;bgp=0,0");
     submodules:
         node[numNodes]: MobileHost {
             parameters:
@@ -65,4 +66,9 @@ network MoBANNetwork
             parameters:
                 @display("i=block/wheelbarrow");
         }
+        visualizer: IntegratedVisualizer {
+            parameters:
+                @display("p=100,50");
+        }
 }
+

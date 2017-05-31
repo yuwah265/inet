@@ -19,6 +19,7 @@
 package inet.examples.mobility;
 
 import inet.common.scenario.ScenarioManager;
+import inet.visualizer.integrated.IntegratedVisualizer;
 
 
 network MobileNetworkWithScenario
@@ -34,5 +35,9 @@ network MobileNetworkWithScenario
         scenarioManager: ScenarioManager {
             parameters:
                 @display("p=50,50");
+        }
+        visualizer: IntegratedVisualizer {
+            parameters:
+                @display("p=100,50");
         }
 }
