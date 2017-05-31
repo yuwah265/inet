@@ -59,5 +59,15 @@
         </repeat>
     </movement>
 
+    <movement id="7">
+        <!-- draw a square -->
+        <set speed="10" x="100" y="200" borderPolicy="wrap"/>
+            <turn angle="45"/>
+        <repeat n="10">
+            <forward d="500"/>
+            <turn angle="45"/>
+        </repeat>
+    </movement>
+
 </movements>
 
