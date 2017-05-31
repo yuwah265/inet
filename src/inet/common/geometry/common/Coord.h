@@ -20,6 +20,8 @@
 #ifndef __INET_COORD_H
 #define __INET_COORD_H
 
+#include <iomanip>
+
 #include "inet/common/INETDefs.h"
 #include "inet/common/INETMath.h"
 
@@ -290,7 +292,7 @@ class INET_API Coord : public cObject
 
 inline std::ostream& operator<<(std::ostream& os, const Coord& coord)
 {
-    return os << "(" << coord.x << ", " << coord.y << ", " << coord.z << ")";
+    return os << std::setprecision (std::numeric_limits<double>::digits10 + 1) << "(" << coord.x << ", " << coord.y << ", " << coord.z << ")";
 }
 
 inline std::string Coord::info() const
