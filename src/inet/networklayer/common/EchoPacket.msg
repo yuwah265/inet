@@ -35,5 +35,6 @@ enum EchoProtocolType
 //
 packet EchoPacket
 {
+    byteLength = 4;
     int type @enum(EchoProtocolType);
 }
