@@ -1323,7 +1323,7 @@ void IPv6NeighbourDiscovery::processRAPacket(Packet *packet, IPv6RouterAdvertise
         //MACAddress macAddress = ra->getSourceLinkLayerAddress();
         //uint mtu = ra->getMTU();
         for (int i = 0; i < (int)ra->getPrefixInformationArraySize(); i++) {
-            IPv6NDPrefixInformation& prefixInfo = ra->getPrefixInformation(i);
+            const IPv6NDPrefixInformation& prefixInfo = ra->getPrefixInformation(i);
             if (prefixInfo.getAutoAddressConfFlag() == true) {    //If auto addr conf is set
 #ifndef WITH_xMIPv6
                 processRAPrefixInfoForAddrAutoConf(prefixInfo, ie);    //We process prefix Info and form an addr
@@ -1555,7 +1555,7 @@ void IPv6NeighbourDiscovery::processRAPrefixInfo(IPv6RouterAdvertisement *ra,
 }
 
 #ifndef WITH_xMIPv6
-void IPv6NeighbourDiscovery::processRAPrefixInfoForAddrAutoConf(IPv6NDPrefixInformation& prefixInfo, InterfaceEntry *ie)
+void IPv6NeighbourDiscovery::processRAPrefixInfoForAddrAutoConf(const IPv6NDPrefixInformation& prefixInfo, InterfaceEntry *ie)
 {
     EV_INFO << "Processing Prefix Info for address auto-configuration.\n";
     IPv6Address prefix = prefixInfo.getPrefix();
@@ -2414,7 +2414,7 @@ void IPv6NeighbourDiscovery::processRedirectPacket(IPv6Redirect *redirect)
 
 #ifdef WITH_xMIPv6
 //The overlaoded function has been added by zarrar yousaf on 20.07.07
-void IPv6NeighbourDiscovery::processRAPrefixInfoForAddrAutoConf(IPv6NDPrefixInformation& prefixInfo, InterfaceEntry *ie, bool hFlag)
+void IPv6NeighbourDiscovery::processRAPrefixInfoForAddrAutoConf(const IPv6NDPrefixInformation& prefixInfo, InterfaceEntry *ie, bool hFlag)
 {
     EV_INFO << "Processing Prefix Info for address auto-configuration.\n";
     IPv6Address prefix = prefixInfo.getPrefix();

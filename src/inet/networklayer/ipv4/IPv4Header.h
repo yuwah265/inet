@@ -74,15 +74,16 @@ class INET_API IPv4Header : public IPv4Header_Base
     /**
      * Returns the kth extension header in this datagram
      */
-    virtual TLVOptionBase& getOption(unsigned int k) { return *check_and_cast<TLVOptionBase *>(&(options.at(k))); }
-    virtual const TLVOptionBase& getOption(unsigned int k) const { return const_cast<IPv4Header*>(this)->getOption(k); }
+    virtual TLVOptionBase& getMutableOption(unsigned int k) { return *check_and_cast<TLVOptionBase *>(&(options.getMutableTlvOption(k))); }
+    virtual const TLVOptionBase& getOption(unsigned int k) const { return *check_and_cast<const TLVOptionBase *>(&(options.getTlvOption(k))); }
 
     /**
      * Returns the TLVOptionBase of the specified type,
      * or nullptr. If index is 0, then the first, if 1 then the
      * second option is returned.
      */
-    virtual TLVOptionBase *findOptionByType(short int optionType, int index = 0);
+    virtual TLVOptionBase *findMutableOptionByType(short int optionType, int index = 0);
+    virtual const TLVOptionBase *findOptionByType(short int optionType, int index = 0) const;
 
     /**
      * Adds an TLVOptionBase to the datagram.

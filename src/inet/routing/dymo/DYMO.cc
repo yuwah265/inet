@@ -450,8 +450,8 @@ void DYMO::processDYMOPacket(Packet *packet, const Ptr<DYMOPacket>& dymoPacket)
 bool DYMO::permissibleRteMsg(Packet *packet, const Ptr<RteMsg>& rteMsg)
 {
     // 7.5. Handling a Received RteMsg
-    AddressBlock& originatorNode = rteMsg->getOriginatorNode();
-    AddressBlock& targetNode = rteMsg->getTargetNode();
+    const AddressBlock& originatorNode = rteMsg->getOriginatorNode();
+    const AddressBlock& targetNode = rteMsg->getTargetNode();
     // 1. HandlingRtr MUST handle AODVv2 messages only from adjacent
     //    routers as specified in Section 5.4. AODVv2 messages from other
     //    sources MUST be disregarded.
@@ -588,8 +588,8 @@ bit DYMO::computeRteMsgLength(const Ptr<RteMsg>& rteMsg)
 Ptr<RREQ> DYMO::createRREQ(const L3Address& target, int retryCount)
 {
     auto rreq = std::make_shared<RREQ>(); // TODO: "RREQ");
-    AddressBlock& originatorNode = rreq->getOriginatorNode();
-    AddressBlock& targetNode = rreq->getTargetNode();
+    AddressBlock& originatorNode = rreq->getMutableOriginatorNode();
+    AddressBlock& targetNode = rreq->getMutableTargetNode();
     // 7.3. RREQ Generation
     // 1. RREQ_Gen MUST increment its OwnSeqNum by one (1) according to the
     //    rules specified in Section 5.5.
@@ -714,8 +714,8 @@ Ptr<RREP> DYMO::createRREP(const Ptr<RteMsg>& rteMsg, IRoute *route)
 {
     DYMORouteData *routeData = check_and_cast<DYMORouteData *>(route->getProtocolData());
     auto rrep = std::make_shared<RREP>(); // TODO: "RREP");
-    AddressBlock& originatorNode = rrep->getOriginatorNode();
-    AddressBlock& targetNode = rrep->getTargetNode();
+    AddressBlock& originatorNode = rrep->getMutableOriginatorNode();
+    AddressBlock& targetNode = rrep->getMutableTargetNode();
     // 1. RREP_Gen first uses the routing information to update its route
     //    table entry for OrigNode if necessary as specified in Section 6.2.
     // NOTE: this is already done
@@ -948,7 +948,7 @@ void DYMO::processRERR(Packet *packet, const Ptr<RERR>& rerrIncoming)
         // Route is found, processing is complete for that UnreachableNode.Address.
         std::vector<L3Address> unreachableAddresses;
         for (int i = 0; i < (int)rerrIncoming->getUnreachableNodeArraySize(); i++) {
-            AddressBlock& addressBlock = rerrIncoming->getUnreachableNode(i);
+            const AddressBlock& addressBlock = rerrIncoming->getUnreachableNode(i);
             for (int j = 0; j < routingTable->getNumRoutes(); j++) {
                 IRoute *route = routingTable->getRoute(j);
                 if (route->getSource() == this) {
@@ -1058,7 +1058,7 @@ bit DYMO::computeRERRLength(const Ptr<RERR>& rerr)
 // handling routes
 //
 
-void DYMO::updateRoutes(Packet *packet, const Ptr<RteMsg>& rteMsg, AddressBlock& addressBlock)
+void DYMO::updateRoutes(Packet *packet, const Ptr<RteMsg>& rteMsg, const AddressBlock& addressBlock)
 {
     const L3Address& address = addressBlock.getAddress();
     if (address == getSelfAddress())
@@ -1111,7 +1111,7 @@ void DYMO::updateRoutes(Packet *packet, const Ptr<RteMsg>& rteMsg, AddressBlock&
     }
 }
 
-IRoute *DYMO::createRoute(Packet *packet, const Ptr<RteMsg>& rteMsg, AddressBlock& addressBlock)
+IRoute *DYMO::createRoute(Packet *packet, const Ptr<RteMsg>& rteMsg, const AddressBlock& addressBlock)
 {
     IRoute *route = routingTable->createRoute();
     route->setSourceType(IRoute::DYMO);
@@ -1121,7 +1121,7 @@ IRoute *DYMO::createRoute(Packet *packet, const Ptr<RteMsg>& rteMsg, AddressBloc
     return route;
 }
 
-void DYMO::updateRoute(Packet *packet, const Ptr<RteMsg>& rteMsg, AddressBlock& addressBlock, IRoute *route)
+void DYMO::updateRoute(Packet *packet, const Ptr<RteMsg>& rteMsg, const AddressBlock& addressBlock, IRoute *route)
 {
     // 6.2. Applying Route Updates To Route Table Entries
     DYMORouteData *routeData = check_and_cast<DYMORouteData *>(route->getProtocolData());

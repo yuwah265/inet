@@ -417,7 +417,7 @@ bool Neighbor::needAdjacency()
  * a copy of the LSA is added to the end of the retransmission list.
  * @param lsa [in] The LSA to be added.
  */
-void Neighbor::addToRetransmissionList(OSPFLSA *lsa)
+void Neighbor::addToRetransmissionList(const OSPFLSA *lsa)
 {
     auto it = linkStateRetransmissionList.begin();
     for ( ; it != linkStateRetransmissionList.end(); it++) {
@@ -431,20 +431,20 @@ void Neighbor::addToRetransmissionList(OSPFLSA *lsa)
     OSPFLSA *lsaCopy = nullptr;
     switch (lsa->getHeader().getLsType()) {
         case ROUTERLSA_TYPE:
-            lsaCopy = new OSPFRouterLSA(*(check_and_cast<OSPFRouterLSA *>(lsa)));
+            lsaCopy = new OSPFRouterLSA(*(check_and_cast<const OSPFRouterLSA *>(lsa)));
             break;
 
         case NETWORKLSA_TYPE:
-            lsaCopy = new OSPFNetworkLSA(*(check_and_cast<OSPFNetworkLSA *>(lsa)));
+            lsaCopy = new OSPFNetworkLSA(*(check_and_cast<const OSPFNetworkLSA *>(lsa)));
             break;
 
         case SUMMARYLSA_NETWORKS_TYPE:
         case SUMMARYLSA_ASBOUNDARYROUTERS_TYPE:
-            lsaCopy = new OSPFSummaryLSA(*(check_and_cast<OSPFSummaryLSA *>(lsa)));
+            lsaCopy = new OSPFSummaryLSA(*(check_and_cast<const OSPFSummaryLSA *>(lsa)));
             break;
 
         case AS_EXTERNAL_LSA_TYPE:
-            lsaCopy = new OSPFASExternalLSA(*(check_and_cast<OSPFASExternalLSA *>(lsa)));
+            lsaCopy = new OSPFASExternalLSA(*(check_and_cast<const OSPFASExternalLSA *>(lsa)));
             break;
 
         default:
@@ -515,7 +515,7 @@ void Neighbor::clearUpdateRetransmissionTimer()
     updateRetransmissionTimerActive = false;
 }
 
-void Neighbor::addToRequestList(OSPFLSAHeader *lsaHeader)
+void Neighbor::addToRequestList(const OSPFLSAHeader *lsaHeader)
 {
     linkStateRequestList.push_back(new OSPFLSAHeader(*lsaHeader));
 }
@@ -695,10 +695,10 @@ void Neighbor::retransmitUpdatePacket()
 
                         unsigned short lsAge = updatePacket->getRouterLSAs(routerLSACount).getHeader().getLsAge();
                         if (lsAge < MAX_AGE - parentInterface->getTransmissionDelay()) {
-                            updatePacket->getRouterLSAs(routerLSACount).getHeader().setLsAge(lsAge + parentInterface->getTransmissionDelay());
+                            updatePacket->getMutableRouterLSAs(routerLSACount).getMutableHeader().setLsAge(lsAge + parentInterface->getTransmissionDelay());
                         }
                         else {
-                            updatePacket->getRouterLSAs(routerLSACount).getHeader().setLsAge(MAX_AGE);
+                            updatePacket->getMutableRouterLSAs(routerLSACount).getMutableHeader().setLsAge(MAX_AGE);
                         }
                     }
                     break;
@@ -712,10 +712,10 @@ void Neighbor::retransmitUpdatePacket()
 
                         unsigned short lsAge = updatePacket->getNetworkLSAs(networkLSACount).getHeader().getLsAge();
                         if (lsAge < MAX_AGE - parentInterface->getTransmissionDelay()) {
-                            updatePacket->getNetworkLSAs(networkLSACount).getHeader().setLsAge(lsAge + parentInterface->getTransmissionDelay());
+                            updatePacket->getMutableNetworkLSAs(networkLSACount).getMutableHeader().setLsAge(lsAge + parentInterface->getTransmissionDelay());
                         }
                         else {
-                            updatePacket->getNetworkLSAs(networkLSACount).getHeader().setLsAge(MAX_AGE);
+                            updatePacket->getMutableNetworkLSAs(networkLSACount).getMutableHeader().setLsAge(MAX_AGE);
                         }
                     }
                     break;
@@ -730,10 +730,10 @@ void Neighbor::retransmitUpdatePacket()
 
                         unsigned short lsAge = updatePacket->getSummaryLSAs(summaryLSACount).getHeader().getLsAge();
                         if (lsAge < MAX_AGE - parentInterface->getTransmissionDelay()) {
-                            updatePacket->getSummaryLSAs(summaryLSACount).getHeader().setLsAge(lsAge + parentInterface->getTransmissionDelay());
+                            updatePacket->getMutableSummaryLSAs(summaryLSACount).getMutableHeader().setLsAge(lsAge + parentInterface->getTransmissionDelay());
                         }
                         else {
-                            updatePacket->getSummaryLSAs(summaryLSACount).getHeader().setLsAge(MAX_AGE);
+                            updatePacket->getMutableSummaryLSAs(summaryLSACount).getMutableHeader().setLsAge(MAX_AGE);
                         }
                     }
                     break;
@@ -747,10 +747,10 @@ void Neighbor::retransmitUpdatePacket()
 
                         unsigned short lsAge = updatePacket->getAsExternalLSAs(asExternalLSACount).getHeader().getLsAge();
                         if (lsAge < MAX_AGE - parentInterface->getTransmissionDelay()) {
-                            updatePacket->getAsExternalLSAs(asExternalLSACount).getHeader().setLsAge(lsAge + parentInterface->getTransmissionDelay());
+                            updatePacket->getMutableAsExternalLSAs(asExternalLSACount).getMutableHeader().setLsAge(lsAge + parentInterface->getTransmissionDelay());
                         }
                         else {
-                            updatePacket->getAsExternalLSAs(asExternalLSACount).getHeader().setLsAge(MAX_AGE);
+                            updatePacket->getMutableAsExternalLSAs(asExternalLSACount).getMutableHeader().setLsAge(MAX_AGE);
                         }
                     }
                     break;

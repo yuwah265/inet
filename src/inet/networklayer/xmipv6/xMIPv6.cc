@@ -717,7 +717,7 @@ void xMIPv6::processBUMessage(Packet *inPacket, const Ptr<BindingUpdate>& bu)
     if (validBUMessage) {
         auto ifTag = inPacket->getMandatoryTag<InterfaceInd>();
         auto addrTag = inPacket->getMandatoryTag<L3AddressInd>();
-        IPv6Address& HoA = bu->getHomeAddressMN();
+        const IPv6Address& HoA = bu->getHomeAddressMN();
         IPv6Address CoA = addrTag->getSrcAddress().toIPv6();
         IPv6Address destAddress = addrTag->getDestAddress().toIPv6();
         uint buLifetime = bu->getLifetime() * 4;    /* 6.1.7 One time unit is 4 seconds. */
@@ -2036,7 +2036,7 @@ void xMIPv6::processType2RH(Packet *packet, IPv6Header *datagram, IPv6RoutingHea
     }
 
     bool validRH2 = false;
-    IPv6Address& HoA = rh->getAddress(0);
+    const IPv6Address& HoA = rh->getAddress(0);
 
     /*11.3.3
        A node receiving a packet addressed to itself (i.e., one of the
@@ -2120,8 +2120,8 @@ void xMIPv6::processHoAOpt(Packet *packet, IPv6Header *datagram, HomeAddressOpti
 {
     // datagram from MN to CN
     bool validHoAOpt = false;
-    IPv6Address& HoA = hoaOpt->getHomeAddress();
-    IPv6Address& CoA = datagram->getSrcAddress();
+    const IPv6Address& HoA = hoaOpt->getHomeAddress();
+    const IPv6Address& CoA = datagram->getSrcAddress();
 
     /*9.3.1
        Packets containing a
@@ -2591,7 +2591,7 @@ void xMIPv6::handleBULExpiry(cMessage *msg)
     }
 }
 
-void xMIPv6::createBCEntryExpiryTimer(IPv6Address& HoA, InterfaceEntry *ie, simtime_t scheduledTime)
+void xMIPv6::createBCEntryExpiryTimer(const IPv6Address& HoA, InterfaceEntry *ie, simtime_t scheduledTime)
 {
     cMessage *bcExpiryMsg = new cMessage("BCEntryExpiry", MK_BC_EXPIRY);
 

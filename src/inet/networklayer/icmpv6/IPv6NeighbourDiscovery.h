@@ -313,10 +313,10 @@ class INET_API IPv6NeighbourDiscovery : public cSimpleModule, public ILifecycle
     virtual void processRAPrefixInfo(IPv6RouterAdvertisement *ra, InterfaceEntry *ie);
 
 #ifndef WITH_xMIPv6
-    virtual void processRAPrefixInfoForAddrAutoConf(IPv6NDPrefixInformation& prefixInfo,
+    virtual void processRAPrefixInfoForAddrAutoConf(const IPv6NDPrefixInformation& prefixInfo,
             InterfaceEntry *ie);
 #else /* WITH_xMIPv6 */
-    virtual void processRAPrefixInfoForAddrAutoConf(IPv6NDPrefixInformation& prefixInfo,
+    virtual void processRAPrefixInfoForAddrAutoConf(const IPv6NDPrefixInformation& prefixInfo,
             InterfaceEntry *ie, bool hFlag = false);    // overloaded method - 3.9.07 CB
 #endif /* WITH_xMIPv6 */
 

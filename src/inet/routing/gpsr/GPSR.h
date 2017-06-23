@@ -114,12 +114,12 @@ class INET_API GPSR : public cSimpleModule, public ILifecycle, public cListener,
     void removeGpsrOptionFromNetworkDatagram(const Ptr<NetworkHeaderBase>& datagram);
 
     // returns nullptr if not found
-    GPSROption *findGpsrOptionInNetworkDatagram(const Ptr<NetworkHeaderBase>& datagram);
-    const GPSROption *findGpsrOptionInNetworkDatagram(const Ptr<NetworkHeaderBase> &datagram) const { return const_cast<GPSR *>(this)->findGpsrOptionInNetworkDatagram(datagram); }
+    GPSROption *findMutableGpsrOptionInNetworkDatagram(const Ptr<NetworkHeaderBase>& datagram);
+    const GPSROption *findGpsrOptionInNetworkDatagram(const Ptr<NetworkHeaderBase> &datagram) const;
 
     // throws an error when not found
-    GPSROption *getGpsrOptionFromNetworkDatagram(const Ptr<NetworkHeaderBase>& datagram);
-    const GPSROption *getGpsrOptionFromNetworkDatagram(const Ptr<NetworkHeaderBase>& datagram) const { return const_cast<GPSR *>(this)->getGpsrOptionFromNetworkDatagram(datagram); }
+    GPSROption *getMutableGpsrOptionFromNetworkDatagram(const Ptr<NetworkHeaderBase>& datagram);
+    const GPSROption *getGpsrOptionFromNetworkDatagram(const Ptr<NetworkHeaderBase>& datagram) const;
 
     // configuration
     bool isNodeUp() const;

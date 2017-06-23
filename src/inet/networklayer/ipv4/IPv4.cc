@@ -289,7 +289,7 @@ void IPv4::preroutingFinish(Packet *packet, const InterfaceEntry *fromIE, const 
 {
     const auto& ipv4Header = packet->peekHeader<IPv4Header>();
     ASSERT(ipv4Header);
-    IPv4Address& destAddr = ipv4Header->getDestAddress();
+    IPv4Address destAddr = ipv4Header->getDestAddress();
 
     // route packet
 
@@ -385,7 +385,7 @@ void IPv4::datagramLocalOut(Packet *packet, const InterfaceEntry *destIE, IPv4Ad
     }
 
     // send
-    IPv4Address& destAddr = ipv4Header->getDestAddress();
+    IPv4Address destAddr = ipv4Header->getDestAddress();
 
     EV_DETAIL << "Sending datagram " << packet << " with destination = " << destAddr << "\n";
 

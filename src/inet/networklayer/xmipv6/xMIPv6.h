@@ -508,7 +508,7 @@ class INET_API xMIPv6 : public cSimpleModule
     /**
      * Creates or overwrites a timer for BC expiry that fires at provided scheduledTime.
      */
-    void createBCEntryExpiryTimer(IPv6Address& HoA, InterfaceEntry *ie, simtime_t scheduledTime);
+    void createBCEntryExpiryTimer(const IPv6Address& HoA, InterfaceEntry *ie, simtime_t scheduledTime);
 
     /**
      * Handles the expiry of a BC entry.

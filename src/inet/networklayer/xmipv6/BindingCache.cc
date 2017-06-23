@@ -83,7 +83,7 @@ uint BindingCache::readBCSequenceNumber(const IPv6Address& HoA) const
         return pos->second.sequenceNumber;
 }
 
-bool BindingCache::isInBindingCache(const IPv6Address& HoA, IPv6Address& CoA) const
+bool BindingCache::isInBindingCache(const IPv6Address& HoA, const IPv6Address& CoA) const
 {
     BindingCache6::const_iterator pos = bindingCache.find(HoA);
 
@@ -98,7 +98,7 @@ bool BindingCache::isInBindingCache(const IPv6Address& HoA) const
     return bindingCache.find(HoA) != bindingCache.end();
 }
 
-void BindingCache::deleteEntry(IPv6Address& HoA)
+void BindingCache::deleteEntry(const IPv6Address& HoA)
 {
     auto pos = bindingCache.find(HoA);
 

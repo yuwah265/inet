@@ -179,9 +179,9 @@ class INET_API DYMO : public cSimpleModule, public ILifecycle, public cListener,
     bit computeRERRLength(const Ptr<RERR>& rerr);
 
     // handling routes
-    IRoute *createRoute(Packet *packet, const Ptr<RteMsg>& rteMsg, AddressBlock& addressBlock);
-    void updateRoutes(Packet *packet, const Ptr<RteMsg>& rteMsg, AddressBlock& addressBlock);
-    void updateRoute(Packet *packet, const Ptr<RteMsg>& rteMsg, AddressBlock& addressBlock, IRoute *route);
+    IRoute *createRoute(Packet *packet, const Ptr<RteMsg>& rteMsg, const AddressBlock& addressBlock);
+    void updateRoutes(Packet *packet, const Ptr<RteMsg>& rteMsg, const AddressBlock& addressBlock);
+    void updateRoute(Packet *packet, const Ptr<RteMsg>& rteMsg, const AddressBlock& addressBlock, IRoute *route);
     int getLinkCost(const InterfaceEntry *interfaceEntry, DYMOMetricType metricType);
     bool isLoopFree(const Ptr<RteMsg>& rteMsg, IRoute *route);
 

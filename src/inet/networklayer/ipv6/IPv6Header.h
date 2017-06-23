@@ -81,8 +81,8 @@ class INET_API IPv6Header : public IPv6Header_Base
     /**
      * Returns the kth extension header in this datagram
      */
-    virtual IPv6ExtensionHeaderPtr& getExtensionHeader(unsigned int k) override;
-    virtual const IPv6ExtensionHeaderPtr& getExtensionHeader(unsigned int k) const override {return const_cast<IPv6Header*>(this)->getExtensionHeader(k);}
+    virtual IPv6ExtensionHeaderPtr& getMutableExtensionHeader(unsigned int k) override;
+    virtual const IPv6ExtensionHeaderPtr& getExtensionHeader(unsigned int k) const override;
 
     /**
      * Returns the extension header of the specified type,
@@ -90,7 +90,8 @@ class INET_API IPv6Header : public IPv6Header_Base
      * second extension is returned. (The datagram might
      * contain two Destination Options extension.)
      */
-    virtual IPv6ExtensionHeader *findExtensionHeaderByType(IPProtocolId extensionType, int index = 0) const;
+    virtual IPv6ExtensionHeader *findMutableExtensionHeaderByType(IPProtocolId extensionType, int index = 0);
+    virtual const IPv6ExtensionHeader *findExtensionHeaderByType(IPProtocolId extensionType, int index = 0) const;
 
     /**
      * Adds an extension header to the datagram.

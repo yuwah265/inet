@@ -64,16 +64,6 @@ class INET_API TLVOptions : public TLVOptions_Base
     void deleteOptionByType(int type, bool firstOnly = true);
 
     /*
-     * Get the option at the specified position of optionVector. Throws an error if m invalid.
-     */
-    TLVOptionBase& at(int m) { return *optionVector.at(m); }
-
-    /*
-     * Get the option at the specified position of optionVector. Throws an error if m invalid.
-     */
-    TLVOptionBase& operator[](int m)  { return at(m); }
-
-    /*
      * Calculate and returns the total length of all stored options in bytes
      */
     virtual int getLength() const;
@@ -87,7 +77,8 @@ class INET_API TLVOptions : public TLVOptions_Base
     // redefine and implement pure virtual functions from TLVOptions_Base
     virtual void setTlvOptionArraySize(unsigned int size) override { throw cRuntimeError("Do not use it!"); }
     virtual unsigned int getTlvOptionArraySize() const override { return size(); }
-    virtual TLVOptionBase& getTlvOption(unsigned int k) override { return at(k); }
+    virtual const TLVOptionBase& getTlvOption(unsigned int k) const override { return *optionVector.at(k); }
+    virtual TLVOptionBase& getMutableTlvOption(unsigned int k) override { return *optionVector.at(k); }
     virtual void setTlvOption(unsigned int k, const TLVOptionBase& tlvOption) override { throw cRuntimeError("Do not use it!"); }
 
     virtual void parsimPack(cCommBuffer *b) const override;
