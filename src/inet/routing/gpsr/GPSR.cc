@@ -519,7 +519,7 @@ L3Address GPSR::findGreedyRoutingNextHop(const Ptr<NetworkHeaderBase>& datagram,
 L3Address GPSR::findPerimeterRoutingNextHop(const Ptr<NetworkHeaderBase>& datagram, const L3Address& destination)
 {
     EV_DEBUG << "Finding next hop using perimeter routing: destination = " << destination << endl;
-    GPSROption *gpsrOption = getMutableGpsrOptionFromNetworkDatagram(datagram);
+    GPSROption *gpsrOption = getMutableGpsrOptionFromNetworkDatagram(datagram);     //FIXME datagram is immutable, generates runtime error
     L3Address selfAddress = getSelfAddress();
     Coord selfPosition = mobility->getCurrentPosition();
     Coord perimeterRoutingStartPosition = gpsrOption->getPerimeterRoutingStartPosition();
