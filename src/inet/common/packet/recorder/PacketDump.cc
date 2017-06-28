@@ -682,7 +682,7 @@ void PacketDump::tcpDump(bool l2r, const char *label, tcp::TcpHeader *tcpseg,
             out << "\n  TCP Header Option(s) " << direction << ":\n";
 
             for (int i = 0; i < numOptions; i++) {
-                TCPOption *option = tcpseg->getHeaderOption(i);
+                const TCPOption *option = tcpseg->getHeaderOption(i);
                 out << "    " << (i + 1) << ". option kind=" << option->getKind() << " length=" << option->getLength() << "\n";
             }
         }
