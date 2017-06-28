@@ -71,7 +71,7 @@ class INET_API IPv6Header : public IPv6Header_Base
     virtual void setExtensionHeaderArraySize(unsigned int size) override;
 
     /** Generated but unused method, should not be called. */
-    virtual void setExtensionHeader(unsigned int k, const IPv6ExtensionHeaderPtr& extensionHeader_var) override;
+    virtual void setExtensionHeader(unsigned int k, IPv6ExtensionHeader *extensionHeader_var) override;
 
     /**
      * Returns the number of extension headers in this datagram
@@ -81,8 +81,8 @@ class INET_API IPv6Header : public IPv6Header_Base
     /**
      * Returns the kth extension header in this datagram
      */
-    virtual IPv6ExtensionHeaderPtr& getMutableExtensionHeader(unsigned int k) override;
-    virtual const IPv6ExtensionHeaderPtr& getExtensionHeader(unsigned int k) const override;
+    virtual IPv6ExtensionHeader *getMutableExtensionHeader(unsigned int k) override;
+    virtual const IPv6ExtensionHeader *getExtensionHeader(unsigned int k) const override;
 
     /**
      * Returns the extension header of the specified type,

@@ -30,8 +30,7 @@ namespace inet;
 
 cplusplus {{
 class IPv6ExtensionHeader;
-typedef IPv6ExtensionHeader *IPv6ExtensionHeaderPtr;
-std::ostream& operator<<(std::ostream& os, IPv6ExtensionHeaderPtr eh);
+std::ostream& operator<<(std::ostream& os, IPv6ExtensionHeader eh);
 
 const int IPv6_HEADER_BYTES = 40;
 }}
@@ -40,7 +39,7 @@ const int IPv6_HEADER_BYTES = 40;
 enum IPProtocolId;
 
 class noncobject IPv6Address;
-class noncobject IPv6ExtensionHeaderPtr;
+class noncobject IPv6ExtensionHeader;
 class NetworkHeaderBase extends cObject;
 
 //
@@ -64,7 +63,7 @@ class IPv6Header extends NetworkHeaderBase
     short hopLimit = 0;
     int transportProtocol @enum(IPProtocolId) @override;
 
-    abstract IPv6ExtensionHeaderPtr extensionHeader[]; // array of extension headers, subclassed from ~IPv6ExtensionHeader
+    abstract IPv6ExtensionHeader *extensionHeader[]; // array of extension headers, subclassed from ~IPv6ExtensionHeader
 }
 
 
