@@ -14,13 +14,13 @@ namespace inet;
 
 cplusplus{{
 typedef Ptr<Chunk> ChunkPtr;
-typedef const Protocol * ProtocolPtr;
+typedef const Protocol ConstProtocol;
 
 using namespace units::values;
 }}
 
 class noncobject ChunkPtr;
-class noncobject ProtocolPtr;
+class noncobject ConstProtocol;
 class TagBase extends cObject;
 
 //
@@ -28,7 +28,7 @@ class TagBase extends cObject;
 //
 class ProtocolTagBase extends TagBase
 {
-    ProtocolPtr protocol @tostring("->info()") = nullptr; // specifies a protocol (internal class with an artificial identifier)
+    ConstProtocol *protocol @tostring("->info()") = nullptr; // specifies a protocol (internal class with an artificial identifier)
 }
 
 //
