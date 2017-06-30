@@ -71,7 +71,7 @@ class RSVPPathTear extends RSVPPacket
 class RSVPPathError extends RSVPPacket
 {
     @customize(true);
-    IPv4Address errorNode;
+    IPv4Address errorNode @byvalue;
     int errorCode;
     SenderDescriptor_t sender_descriptor;
 

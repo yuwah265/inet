@@ -192,7 +192,7 @@ class INET_API InterfaceEntry : public cNamedObject
     bool isPointToPoint() const { return pointToPoint; }
     bool isLoopback() const { return loopback; }
     double getDatarate() const { return datarate; }
-    const MACAddress& getMacAddress() const { return macAddr; }
+    MACAddress getMacAddress() const { return macAddr; }
     const InterfaceToken& getInterfaceToken() const { return token; }
     //@}
 
@@ -209,7 +209,7 @@ class INET_API InterfaceEntry : public cNamedObject
     virtual void setPointToPoint(bool b) { if (pointToPoint != b) { pointToPoint = b; configChanged(F_POINTTOPOINT); } }
     virtual void setLoopback(bool b) { if (loopback != b) { loopback = b; configChanged(F_LOOPBACK); } }
     virtual void setDatarate(double d) { if (datarate != d) { datarate = d; configChanged(F_DATARATE); } }
-    virtual void setMACAddress(const MACAddress& addr) { if (macAddr != addr) { macAddr = addr; configChanged(F_MACADDRESS); } }
+    virtual void setMACAddress(MACAddress addr) { if (macAddr != addr) { macAddr = addr; configChanged(F_MACADDRESS); } }
     virtual void setInterfaceToken(const InterfaceToken& t) { token = t; configChanged(F_TOKEN); }
     //@}
 

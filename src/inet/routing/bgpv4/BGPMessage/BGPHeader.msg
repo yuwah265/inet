@@ -126,7 +126,7 @@ class BGPOpenMessage extends BGPHeader
     char version = 4;
     unsigned short myAS;
     simtime_t holdTime;
-    IPv4Address BGPIdentifier;
+    IPv4Address BGPIdentifier @byvalue;
     BGPOptionalParameters optionalParameters[];
 }
 
@@ -174,7 +174,7 @@ class BGPUpdatePathAttributesASPath extends BGPUpdatePathAttributes
 //NEXT_HOP (RFC4271 Section 4.3, Type code 3):
 class BGPUpdatePathAttributesNextHop extends BGPUpdatePathAttributes
 {
-    IPv4Address value;
+    IPv4Address value @byvalue;
 }
 
 //LOCAL_PREF (RFC4271 Section 4.3, Type code 5):
@@ -198,13 +198,13 @@ class BGPUpdatePathAttributesAtomicAggregate extends BGPUpdatePathAttributes
 struct BGPUpdateWithdrawnRoutes
 {
     unsigned char length; // 1 octet
-    IPv4Address prefix; // 4 octets
+    IPv4Address prefix @byvalue; // 4 octets
 }
 
 struct BGPUpdateNLRI
 {
     unsigned char length; // 1 octet
-    IPv4Address prefix; // 4 octets
+    IPv4Address prefix @byvalue; // 4 octets
 }
 
 //

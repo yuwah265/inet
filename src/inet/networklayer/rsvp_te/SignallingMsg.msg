@@ -107,7 +107,7 @@ message RsbTimeoutMsg extends SignallingMsg
 //
 message HelloTimerMsg extends SignallingMsg
 {
-    IPv4Address peer;
+    IPv4Address peer @byvalue;
 
     command = MSG_HELLO_TIMER;
 }
@@ -117,7 +117,7 @@ message HelloTimerMsg extends SignallingMsg
 //
 message HelloTimeoutMsg extends SignallingMsg
 {
-    IPv4Address peer;
+    IPv4Address peer @byvalue;
 
     command = MSG_HELLO_TIMEOUT;
 }

@@ -54,7 +54,7 @@ class IGMPMessage extends FieldsChunk
 class IGMPQuery extends IGMPMessage
 {
     type = IGMP_MEMBERSHIP_QUERY;
-    IPv4Address groupAddress;
+    IPv4Address groupAddress @byvalue;
 }
 
 class IGMPv1Query extends IGMPQuery
@@ -66,7 +66,7 @@ class IGMPv1Report extends IGMPMessage
 {
     chunkLength = byte(8);
     type = IGMPV1_MEMBERSHIP_REPORT;
-    IPv4Address groupAddress;
+    IPv4Address groupAddress @byvalue;
 }
 
 class IGMPv2Query extends IGMPQuery      //FIXME IGMPv1Query and IGMPv2Query differs only value of code field.
@@ -79,14 +79,14 @@ class IGMPv2Report extends IGMPMessage
 {
     chunkLength = byte(8);
     type = IGMPV2_MEMBERSHIP_REPORT;
-    IPv4Address groupAddress;
+    IPv4Address groupAddress @byvalue;
 }
 
 class IGMPv2Leave extends IGMPMessage
 {
     chunkLength = byte(8);
     type = IGMPV2_LEAVE_GROUP;
-    IPv4Address groupAddress;
+    IPv4Address groupAddress @byvalue;
 }
 
 //
@@ -121,7 +121,7 @@ enum GroupRecordType
 struct GroupRecord
 {
     int recordType enum(GroupRecordType);
-    IPv4Address groupAddress;
+    IPv4Address groupAddress @byvalue;
     IPv4AddressVector sourceList;
 };
 

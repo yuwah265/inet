@@ -203,7 +203,7 @@ class Ieee80211AssociationRequestFrame extends Ieee80211MgmtFrame
 //
 class Ieee80211ReassociationRequestFrame extends Ieee80211AssociationRequestFrame
 {
-    MACAddress currentAP;
+    MACAddress currentAP @byvalue;
 }
 
 //

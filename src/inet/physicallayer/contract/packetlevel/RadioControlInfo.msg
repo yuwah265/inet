@@ -40,9 +40,9 @@ enum RadioCommandCode
 class ConfigureRadioCommand
 {
     int radioMode = -1;                  // new radio mode or -1 if not set.
-    W power = W(NaN);                    // new default transmission power in the range (0, +infinity) or NaN if not set.
-    bps bitrate = bps(NaN);              // new default bitrate in the range (0, +infinity) or NaN if not set.
+    W power = W(NaN) @byvalue;           // new default transmission power in the range (0, +infinity) or NaN if not set.
+    bps bitrate = bps(NaN) @byvalue;     // new default bitrate in the range (0, +infinity) or NaN if not set.
     IModulation *modulation = nullptr;   // new default modulation or nullptr if not set.
-    Hz carrierFrequency = Hz(NaN);       // new default carrier frequency in the range (0, +infinity) or NaN if not set.
-    Hz bandwidth = Hz(NaN);              // new default bandwidth in the rage (0, +infinity) or NaN if not set.
+    Hz carrierFrequency = Hz(NaN) @byvalue;       // new default carrier frequency in the range (0, +infinity) or NaN if not set.
+    Hz bandwidth = Hz(NaN) @byvalue;              // new default bandwidth in the rage (0, +infinity) or NaN if not set.
 }

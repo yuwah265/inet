@@ -27,7 +27,7 @@ class SignalTagBase extends TagBase
 //
 class SignalPowerTagBase extends SignalTagBase
 {
-    W power = W(NaN); // specifies signal power in Watts
+    W power = W(NaN) @byvalue; // specifies signal power in Watts
 }
 
 //
@@ -51,8 +51,8 @@ class SignalPowerInd extends SignalPowerTagBase
 //
 class SignalBandTagBase extends SignalTagBase
 {
-    Hz carrierFrequency = Hz(NaN); // carrier frequency in the range (0, +infinity) or NaN if not set.
-    Hz bandwidth = Hz(NaN);        // bandwidth in the rage (0, +infinity) or NaN if not set.
+    Hz carrierFrequency = Hz(NaN) @byvalue; // carrier frequency in the range (0, +infinity) or NaN if not set.
+    Hz bandwidth = Hz(NaN) @byvalue;        // bandwidth in the rage (0, +infinity) or NaN if not set.
 }
 
 //
@@ -76,9 +76,9 @@ class SignalBandInd extends SignalBandTagBase
 //
 class SignalBitrateTagBase extends SignalTagBase
 {
-    bps preambleBitrate = bps(NaN); // preamble bitrate in the range (0, +infinity) or NaN if not set.
-    bps headerBitrate = bps(NaN);   // header bitrate in the range (0, +infinity) or NaN if not set.
-    bps dataBitrate = bps(NaN);     // data bitrate in the range (0, +infinity) or NaN if not set.
+    bps preambleBitrate = bps(NaN) @byvalue; // preamble bitrate in the range (0, +infinity) or NaN if not set.
+    bps headerBitrate = bps(NaN) @byvalue;   // header bitrate in the range (0, +infinity) or NaN if not set.
+    bps dataBitrate = bps(NaN) @byvalue;     // data bitrate in the range (0, +infinity) or NaN if not set.
 }
 
 //

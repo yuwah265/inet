@@ -44,7 +44,7 @@ struct SessionObj_t
 {
     int Tunnel_Id;
     int Extended_Tunnel_Id;
-    IPv4Address DestAddress;
+    IPv4Address DestAddress @byvalue;
     int setupPri;
     int holdingPri;
 }
@@ -54,8 +54,8 @@ struct SessionObj_t
 //
 struct RsvpHopObj_t
 {
-    IPv4Address Next_Hop_Address;
-    IPv4Address Logical_Interface_Handle;
+    IPv4Address Next_Hop_Address @byvalue;
+    IPv4Address Logical_Interface_Handle @byvalue;
 }
 
 //
@@ -63,7 +63,7 @@ struct RsvpHopObj_t
 //
 struct SenderTemplateObj_t
 {
-    IPv4Address SrcAddress;
+    IPv4Address SrcAddress @byvalue;
     int Lsp_Id = -1;
 }
 
@@ -114,7 +114,7 @@ struct SenderDescriptor_t
 struct EroObj_t
 {
     bool L = false;
-    IPv4Address node;
+    IPv4Address node @byvalue;
 }
 
 //
@@ -127,3 +127,4 @@ struct FlowDescriptor_t
     IPAddressVector RRO;
     int label;
 }
+

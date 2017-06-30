@@ -48,6 +48,6 @@ class Ieee802DeregisterDsapCommand
 // used with IEEE802CTRL_SENDPAUSE
 class Ieee802PauseCommand
 {
-    MACAddress destinationAddress;
+    MACAddress destinationAddress @byvalue;
     int pauseUnits;
 }

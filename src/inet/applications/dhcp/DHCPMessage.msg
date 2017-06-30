@@ -77,13 +77,13 @@ class DHCPOptions {
     int messageType @enum(DHCPMessageType); // to convey the type of the DHCP message
     string hostName; // name of the client
     int parameterRequestList[]; // used by a DHCP client to request values for specified configuration parameters
-    MACAddress clientIdentifier; // used by DHCP clients to specify their unique identifier
-    IPv4Address requestedIp; // used in a client request (DHCPDISCOVER) to allow the client to request that a particular IP address be assigned
-    IPv4Address subnetMask; // client's subnet mask
-    IPv4Address router[]; // IP addresses for routers on the client's subnet
-    IPv4Address dns[]; // list of DNSs available to the client
-    IPv4Address ntp[]; // list of IP addresses indicating NTP servers available to the client
-    IPv4Address serverIdentifier; // client use this field as the destination address for any unicast DHCP messages to the server
+    MACAddress clientIdentifier @byvalue; // used by DHCP clients to specify their unique identifier
+    IPv4Address requestedIp @byvalue; // used in a client request (DHCPDISCOVER) to allow the client to request that a particular IP address be assigned
+    IPv4Address subnetMask @byvalue; // client's subnet mask
+    IPv4Address router[] @byvalue; // IP addresses for routers on the client's subnet
+    IPv4Address dns[] @byvalue; // list of DNSs available to the client
+    IPv4Address ntp[] @byvalue; // list of IP addresses indicating NTP servers available to the client
+    IPv4Address serverIdentifier @byvalue; // client use this field as the destination address for any unicast DHCP messages to the server
     simtime_t renewalTime; // time interval (T1) from address assignment until the client transitions to the RENEWING state
     simtime_t rebindingTime; // time interval (T2) from address assignment until the client transitions to the REBINDING state
     simtime_t leaseTime; // request for lease time (client), offered lease time (server)
@@ -104,10 +104,10 @@ class DHCPMessage extends FieldsChunk
     unsigned int xid; // transaction ID, a random number chosen by the client, used by the client and server to associate messages and responses between a client and a server
     int secs; // filled in by client, seconds elapsed since client began address acquisition or renewal process
     bool broadcast; // the broadcast bit in the flags field
-    IPv4Address ciaddr; // client IP address; only filled in if client is in BOUND, RENEW or REBINDING state and can respond to ARP requests
-    IPv4Address yiaddr; // 'your' (client) IP address
-    IPv4Address giaddr; // relay agent IP address, used in booting via a relay agent
-    MACAddress chaddr; // client hardware address (MAC)
+    IPv4Address ciaddr @byvalue; // client IP address; only filled in if client is in BOUND, RENEW or REBINDING state and can respond to ARP requests
+    IPv4Address yiaddr @byvalue; // 'your' (client) IP address
+    IPv4Address giaddr @byvalue; // relay agent IP address, used in booting via a relay agent
+    MACAddress chaddr @byvalue; // client hardware address (MAC)
     string sname; // optional server host name
     string file; // boot file name (unused in the simulation)
     DHCPOptions options; // holds DHCP options

@@ -66,10 +66,10 @@ class ARPPacket extends FieldsChunk
 {
     chunkLength = byte(ARP_HEADER_BYTES);
     int opcode @enum(ARPOpcode);
-    MACAddress srcMACAddress;
-    MACAddress destMACAddress;
-    IPv4Address srcIPAddress;
-    IPv4Address destIPAddress;
+    MACAddress srcMACAddress @byvalue;
+    MACAddress destMACAddress @byvalue;
+    IPv4Address srcIPAddress @byvalue;
+    IPv4Address destIPAddress @byvalue;
 }
 
 

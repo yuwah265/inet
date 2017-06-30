@@ -60,7 +60,7 @@ class RSVPResvError extends RSVPPacket
 {
     @customize(true);
     RsvpHopObj_t hop;
-    IPv4Address errorNode;
+    IPv4Address errorNode @byvalue;
     int errorCode;
     rsvpKind = RERROR_MESSAGE;
 }

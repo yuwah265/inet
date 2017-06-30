@@ -43,7 +43,7 @@ class RTPParticipantInfo extends cNamedObject
     abstract uint32 ssrc;
 
     // Used for storing the ip address of this endsystem.
-    IPv4Address address = IPv4Address::UNSPECIFIED_ADDRESS;
+    IPv4Address address = IPv4Address::UNSPECIFIED_ADDRESS @byvalue;
 
     // Used for storing the port for ~RTP by this endsystem.
     int RTPPort = PORT_UNDEF;

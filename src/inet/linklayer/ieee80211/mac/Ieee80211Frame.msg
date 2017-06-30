@@ -128,7 +128,7 @@ class Ieee80211MacHeader extends FieldsChunk
     // TODO: rename to durationField (levy)
     simtime_t duration = -1; // "duration" in the Duration/ID field (-1=no duration)
     short AID = -1;          // "id" (Association ID) in the Duration/ID field (-1=no ID)
-    MACAddress receiverAddress; // aka address1
+    MACAddress receiverAddress @byvalue; // aka address1
     simtime_t MACArrive;    // FIXME remove it, technical data, used inside of MAC module
 }
 
@@ -154,7 +154,7 @@ class Ieee80211AckFrame extends Ieee80211OneAddressHeader
 class Ieee80211TwoAddressHeader extends Ieee80211OneAddressHeader
 {
     chunkLength = bit(LENGTH_RTS) - byte(4);
-    MACAddress transmitterAddress; // aka address2
+    MACAddress transmitterAddress @byvalue; // aka address2
 }
 
 //

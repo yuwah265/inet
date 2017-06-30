@@ -14,5 +14,5 @@ class MacHeaderBase extends cObject;
 class LMacHeader extends MacHeaderBase
 {
     int        mySlot; // the node's current slot number
-    MACAddress occupiedSlots[]; // currently known occupied slots
+    MACAddress occupiedSlots[] @byvalue; // currently known occupied slots
 }

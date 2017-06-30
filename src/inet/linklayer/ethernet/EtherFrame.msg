@@ -49,8 +49,8 @@ enum SAPCode;
 //
 class EtherFrame extends FieldsChunk
 {
-    MACAddress dest;
-    MACAddress src;
+    MACAddress dest @byvalue;
+    MACAddress src @byvalue;
 }
 
 

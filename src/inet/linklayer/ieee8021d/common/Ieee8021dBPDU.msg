@@ -39,11 +39,11 @@ class BPDU extends FieldsChunk
     bool tcaFlag;                             // Topology Change Acknowledgment flag
     bool tcFlag;                              // Topology Change flag
 
-    MACAddress rootAddress;                   // address of the tree root (first part of Root Identifier)
+    MACAddress rootAddress @byvalue;                   // address of the tree root (first part of Root Identifier)
     unsigned int rootPriority;                // priority of the tree root (second part of Root Identifier)
     unsigned int rootPathCost;                // cost to the root
 
-    MACAddress bridgeAddress;                 // address of sender bridge (first part of Bridge Identifier)
+    MACAddress bridgeAddress @byvalue;                 // address of sender bridge (first part of Bridge Identifier)
     unsigned int bridgePriority;              // priority of sender bridge (second part of Bridge Identifier)
 
     unsigned int portNum;                     // port number (ethg[] gate index) of sender port (first part of Port Identifier)

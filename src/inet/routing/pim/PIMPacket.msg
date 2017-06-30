@@ -92,7 +92,7 @@ class GenerationIDOption extends HelloOption
 
 //class AddressListOption extends HelloOption
 //{
-//    IPv4Address secondaryAddresses[];
+//    IPv4Address secondaryAddresses[] @byvalue;
 //}
 
 cplusplus {{ class HelloOption; typedef HelloOption *HelloOptionPtr; }}
@@ -100,7 +100,7 @@ class noncobject HelloOptionPtr;
 
 struct EncodedAddress
 {
-    IPv4Address IPaddress;
+    IPv4Address IPaddress @byvalue;
     bool         S;
     bool        W;                //WC bit
     bool        R;                //RPT bit
@@ -110,7 +110,7 @@ struct EncodedAddress
 // in structure it is not possible to use dynamic arrays, iit is needed to use class
 class JoinPruneGroup
 {
-    IPv4Address     groupAddress;
+    IPv4Address        groupAddress @byvalue;
     EncodedAddress     joinedSourceAddress[];
     EncodedAddress     prunedSourceAddress[];
 }
@@ -137,7 +137,7 @@ class PIMHello extends PIMPacket
 class PIMJoinPrune extends PIMPacket
 {
     type= JoinPrune;
-    IPv4Address        upstreamNeighborAddress;
+    IPv4Address        upstreamNeighborAddress @byvalue;
     int                holdTime;
     //int                numGroups;
     JoinPruneGroup    joinPruneGroups[];
@@ -148,9 +148,9 @@ class PIMJoinPrune extends PIMPacket
 class PIMAssert extends PIMPacket
 {
     type = Assert;
-    IPv4Address        groupAddress;
-    IPv4Address        sourceAddress;
-    bool            R;
+    IPv4Address        groupAddress @byvalue;
+    IPv4Address        sourceAddress @byvalue;
+    bool               R;
     int                metric;
     int                metricPreference;
 }
@@ -172,9 +172,9 @@ class PIMGraft extends PIMJoinPrune
 class PIMStateRefresh extends PIMPacket
 {
     type = StateRefresh;
-    IPv4Address        groupAddress;
-    IPv4Address        sourceAddress;
-    IPv4Address        originatorAddress;
+    IPv4Address        groupAddress @byvalue;
+    IPv4Address        sourceAddress @byvalue;
+    IPv4Address        originatorAddress @byvalue;
     int                metric;
     int                metricPreference;
     short            maskLen;
@@ -196,7 +196,7 @@ class PIMRegister extends PIMPacket
 class PIMRegisterStop extends PIMPacket
 {
     type = RegisterStop;
-    IPv4Address        groupAddress;
-    IPv4Address        sourceAddress;
+    IPv4Address        groupAddress @byvalue;
+    IPv4Address        sourceAddress @byvalue;
 }
 

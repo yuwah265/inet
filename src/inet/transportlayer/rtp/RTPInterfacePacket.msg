@@ -80,7 +80,7 @@ class RTPCIEnterSession extends RTPControlInfo
     string commonName;
     string profileName;
     int bandwidth;
-    IPv4Address destinationAddress;
+    IPv4Address destinationAddress @byvalue;
     int port;
 };
 

@@ -124,7 +124,7 @@ class IPv4OptionRecordRoute extends IPv4Option
     // length = 3 + 4 * getRecordAddressArraySize();
     short nextAddressIdx;
     // pointer = 4 + 4 * nextAddressIdx
-    IPv4Address recordAddress[];    // max size is 9
+    IPv4Address recordAddress[] @byvalue;    // max size is 9
 }
 
 //
@@ -141,7 +141,7 @@ class IPv4OptionTimestamp extends IPv4Option
 
     // use either up to 4 addresses with timestamps or
     // only up to 9 timestamps, according to the flag
-    IPv4Address recordAddress[];
+    IPv4Address recordAddress[] @byvalue;
     simtime_t recordTimestamp[];
 }
 
@@ -185,13 +185,13 @@ class IPv4Header extends NetworkHeaderBase
     short version = 4;
     short headerLength = IP_HEADER_BYTES;
 
-    IPv4Address srcAddress;
-    IPv4Address destAddress;
+    IPv4Address srcAddress @byvalue;
+    IPv4Address destAddress @byvalue;
 
     uint16_t crc = 0;
     int crcMode @enum(CrcMode) = -1;
 
-    int transportProtocol  @override @enum(IPProtocolId) = IP_PROT_NONE;
+    int transportProtocol @override @enum(IPProtocolId) = IP_PROT_NONE;
     short timeToLive;
     int identification;
     bool moreFragments;

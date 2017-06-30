@@ -58,8 +58,8 @@ class OSPFPacket extends FieldsChunk
     char version = 2;
     char type @enum(OSPFPacketType) = HELLO_PACKET;
 
-    IPv4Address routerID;
-    IPv4Address areaID;
+    IPv4Address routerID @byvalue;
+    IPv4Address areaID @byvalue;
 
     short authenticationType = 0;
     char authentication[8];
@@ -70,7 +70,7 @@ class OSPFPacket extends FieldsChunk
 //
 class OSPFHelloPacket extends OSPFPacket
 {
-    IPv4Address networkMask;
+    IPv4Address networkMask @byvalue;
 
     short helloInterval = 5;
 
@@ -79,9 +79,9 @@ class OSPFHelloPacket extends OSPFPacket
     char routerPriority = 0;
     long routerDeadInterval = 0;
 
-    IPv4Address designatedRouter;
-    IPv4Address backupDesignatedRouter;
-    IPv4Address neighbor[];
+    IPv4Address designatedRouter @byvalue;
+    IPv4Address backupDesignatedRouter @byvalue;
+    IPv4Address neighbor[] @byvalue;
 }
 
 

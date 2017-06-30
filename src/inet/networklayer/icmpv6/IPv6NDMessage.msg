@@ -106,7 +106,7 @@ class IPv6RouterSolicitation extends IPv6NDMessage
     // The link-layer address of the sender, if known.
     // MUST NOT be included if the Source Address is the unspecified address.
     // Otherwise, it SHOULD be included on link layers that have addresses.
-    MACAddress sourceLinkLayerAddress;
+    MACAddress sourceLinkLayerAddress @byvalue;
 }
 
 //
@@ -126,7 +126,7 @@ class IPv6RouterAdvertisement extends IPv6NDMessage
     unsigned int retransTimer;
 
     //Possible Options
-    MACAddress sourceLinkLayerAddress;        //source link layer option
+    MACAddress sourceLinkLayerAddress @byvalue;        //source link layer option
     unsigned int MTU;                //MTU option
     IPv6NDPrefixInformation prefixInformation[];    //Prefix Information Option
     MIPv6NDAdvertisementInterval advInterval;    //New Advertisement Interval Option (MIPv6)
@@ -148,7 +148,7 @@ class IPv6NeighbourSolicitation extends IPv6NDMessage
     // MUST NOT be included when the source IP address is the unspecified address.
     // Otherwise, on link layers that have addresses this option MUST be included in multicast
     // solicitations and SHOULD be included in unicast solicitations.
-    MACAddress sourceLinkLayerAddress;
+    MACAddress sourceLinkLayerAddress @byvalue;
 }
 
 //
@@ -164,7 +164,7 @@ class IPv6NeighbourAdvertisement extends IPv6NDMessage
     IPv6Address targetAddress;// MUST NOT be a multicast address.
 
     //Possible Options
-    MACAddress targetLinkLayerAddress;    //Target Link Layer Address option
+    MACAddress targetLinkLayerAddress @byvalue;    //Target Link Layer Address option
 }
 
 //
@@ -178,7 +178,7 @@ class IPv6Redirect extends IPv6NDMessage
     IPv6Address destinationAddress;
 
     //Possible Options
-    MACAddress targetLinkLayerAddress;
+    MACAddress targetLinkLayerAddress @byvalue;
         //Redirected Header Encapsulated Msg
 }
 

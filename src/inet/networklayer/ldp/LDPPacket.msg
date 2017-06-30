@@ -56,7 +56,7 @@ enum LDP_STATUS_TYPES
 
 struct FEC_TLV
 {
-    IPv4Address addr;
+    IPv4Address addr @byvalue;
     int length;
 }
 
@@ -66,8 +66,8 @@ struct FEC_TLV
 class LDPPacket extends FieldsChunk
 {
     int type;
-    IPv4Address senderAddress;
-    IPv4Address receiverAddress;
+    IPv4Address senderAddress @byvalue;
+    IPv4Address receiverAddress @byvalue;
 }
 
 

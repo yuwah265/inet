@@ -33,10 +33,10 @@ class noncobject IPv4Address;
 //
 struct TELinkStateInfo
 {
-    IPv4Address advrouter; // routerId of originator of this link state entry
-    IPv4Address linkid;    // identifies link within advrouter; set to peer's address
-    IPv4Address local;     // address of local interface of this link
-    IPv4Address remote;    // address of "gateway" to peer
+    IPv4Address advrouter @byvalue; // routerId of originator of this link state entry
+    IPv4Address linkid @byvalue;    // identifies link within advrouter; set to peer's address
+    IPv4Address local @byvalue;     // address of local interface of this link
+    IPv4Address remote @byvalue;    // address of "gateway" to peer
     double metric;       // link metric
     double MaxBandwidth; // maximum bandwidth (bps)
     double UnResvBandwidth[8]; // unreserved bandwidths --FIXME indexed by what?
@@ -57,5 +57,4 @@ class TEDChangeInfo
 {
     int tedLinkIndices[];
 }
-
 

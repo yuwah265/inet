@@ -14,8 +14,8 @@ class TagBase extends cObject;
 
 class MacAddressTagBase extends TagBase
 {
-    MACAddress srcAddress;      // may be unspecified
-    MACAddress destAddress; // always specified
+    MACAddress srcAddress @byvalue;      // may be unspecified
+    MACAddress destAddress @byvalue; // always specified
 }
 
 //
