@@ -17,21 +17,11 @@
 
 
 cplusplus {{
-#include "inet/linklayer/common/EtherTypeTag_m.h"
 #include "inet/linklayer/common/Ieee802Ctrl_m.h" // for enums
-#include "inet/linklayer/common/MACAddress.h"
 #include "inet/linklayer/ethernet/Ethernet.h"
 }}
 
 namespace inet;
-
-class noncobject MACAddress;
-
-class noncobject MessageId;
-
-enum EtherType;
-
-enum SAPCode;
 
 //
 // Abstract base class for various Ethernet traffic types:

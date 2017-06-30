@@ -30,8 +30,6 @@ class FieldsChunk extends cObject;
 
 class noncobject MACAddress;
 
-class noncobject MessageId;
-
 enum EtherType;
 
 enum SAPCode;
