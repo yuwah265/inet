@@ -18,6 +18,8 @@
 #ifndef __INET_VISUALIZERBASE_H
 #define __INET_VISUALIZERBASE_H
 
+#include <functional>
+
 #include "inet/common/geometry/common/Coord.h"
 #include "inet/common/packet/chunk/Chunk.h"
 #include "inet/networklayer/common/InterfaceEntry.h"
