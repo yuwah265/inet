@@ -28,5 +28,5 @@ if [ -f $DIR/INET ]; then
 elif [ -f $DIR/INET.exe ]; then
   $TOOL $DIR/INET.exe $OPP_OPTIONS
 else
-  $TOOL opp_run -l $DIR/INET $OPP_OPTIONS
+  $TOOL opp_run -l $DIR/INET_dbg $OPP_OPTIONS
 fi
