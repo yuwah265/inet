@@ -2,8 +2,8 @@
 <featurestates>
     <feature enabled="true" id="TCP_common"/>
     <feature enabled="true" id="TCP_INET"/>
-    <feature enabled="true" id="TCP_lwIP"/>
-    <feature enabled="true" id="TCP_NSC"/>
+    <feature enabled="false" id="TCP_lwIP"/>
+    <feature enabled="false" id="TCP_NSC"/>
     <feature enabled="true" id="IPv4"/>
     <feature enabled="true" id="INET_examples"/>
     <feature enabled="true" id="IPv6"/>
@@ -53,8 +53,8 @@
     <feature enabled="true" id="wireless_examples"/>
     <feature enabled="true" id="visualization"/>
     <feature enabled="true" id="visualization_examples"/>
-    <feature enabled="true" id="VoIPStream"/>
-    <feature enabled="true" id="VoIPStream_examples"/>
+    <feature enabled="false" id="VoIPStream"/>
+    <feature enabled="false" id="VoIPStream_examples"/>
     <feature enabled="true" id="SimpleVoIP"/>
     <feature enabled="true" id="SimpleVoIP_examples"/>
     <feature enabled="true" id="HttpTools"/>
@@ -74,4 +74,7 @@
     <feature enabled="true" id="CsmaCaMac"/>
     <feature enabled="true" id="wirelesstutorial"/>
     <feature enabled="true" id="visualizationtutorial"/>
+    <feature enabled="true" id="configuratortutorial"/>
+    <feature enabled="true" id="visualizershowcases"/>
+    <feature enabled="true" id="wirelessshowcases"/>
 </featurestates>
