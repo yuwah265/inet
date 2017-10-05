@@ -42,15 +42,24 @@ void LabeledPolylineFigure::setPoints(const std::vector<cFigure::Point>& points)
 void LabeledPolylineFigure::updateLabelPosition()
 {
     auto points = polylineFigure->getPoints();
-    int index = (points.size() - 1) / 2;
-    auto position = (points[index] + points[index + 1]) / 2;
-    auto direction = points[index + 1] - points[index];
-    double alpha = atan2(-direction.y, direction.x);
-    if (alpha > M_PI / 2 || alpha < -M_PI / 2)
-        alpha += M_PI;
-    panelFigure->setTransform(cFigure::Transform().rotate(-alpha));
-    panelFigure->setPosition(position);
-    labelFigure->setPosition(cFigure::Point(0, -polylineFigure->getLineWidth() / 2));
+    panelFigure->setVisible(points.size() >= 1);
+    if (points.size() >= 2) {
+        int index = (points.size() - 1) / 2;
+        auto position = (points[index] + points[index + 1]) / 2;
+        auto direction = points[index + 1] - points[index];
+        double alpha = atan2(-direction.y, direction.x);
+        if (alpha > M_PI / 2 || alpha < -M_PI / 2)
+            alpha += M_PI;
+        panelFigure->setTransform(cFigure::Transform().rotate(-alpha));
+        panelFigure->setPosition(position);
+        labelFigure->setPosition(cFigure::Point(0, -polylineFigure->getLineWidth() / 2));
+    }
+    else if (points.size() == 1) {
+        auto position = points[0];
+        panelFigure->setTransform(cFigure::Transform());
+        panelFigure->setPosition(position);
+        labelFigure->setPosition(cFigure::Point(0, -polylineFigure->getLineWidth() / 2));
+    }
 }
 
 } // namespace inet
