@@ -18,7 +18,6 @@
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/serializer/EthernetCRC.h"
 #include "inet/linklayer/ieee80211/mac/contract/IContention.h"
-#include "inet/linklayer/ieee80211/mac/contract/IStatistics.h"
 #include "inet/linklayer/ieee80211/mac/contract/ITx.h"
 #include "inet/linklayer/ieee80211/mac/Ieee80211Mac.h"
 #include "inet/linklayer/ieee80211/mac/Rx.h"
@@ -49,7 +48,6 @@ void Rx::initialize(int stage)
         WATCH(mediumFree);
     }
     else if (stage == INITSTAGE_LINK_LAYER) {
-        // statistics = check_and_cast<IStatistics *>(getModuleByPath(par("statisticsModule")));
         address = check_and_cast<Ieee80211Mac*>(getContainingNicModule(this)->getSubmodule("mac"))->getAddress();
         recomputeMediumFree();
     }
@@ -76,18 +74,12 @@ bool Rx::lowerFrameReceived(Packet *packet)
         const auto& header = packet->peekHeader<Ieee80211MacHeader>();
         if (header->getReceiverAddress() != address)
             setOrExtendNav(header->getDuration());
-//        statistics->frameReceived(frame);
         return true;
     }
     else {
         EV_INFO << "Received an erroneous frame from PHY, dropping it." << std::endl;
-        PacketDropDetails details;
-        details.setReason(INCORRECTLY_RECEIVED);
-        emit(packetDropSignal, packet, &details);
-        delete packet;
         for (auto contention : contentions)
             contention->corruptedFrameReceived();
-//        statistics->erroneousFrameReceived();
         return false;
     }
 }

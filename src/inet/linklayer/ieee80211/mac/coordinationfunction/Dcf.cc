@@ -155,24 +155,14 @@ void Dcf::processLowerFrame(Packet *packet, const Ptr<const Ieee80211MacHeader>&
             frameSequenceHandler->processResponse(packet);
             updateDisplayString();
         }
-        else {
-            EV_INFO << "This frame is not for us" << std::endl;
-            PacketDropDetails details;
-            details.setReason(NOT_ADDRESSED_TO_US);
-            emit(packetDropSignal, packet, &details);
-            delete packet;
-        }
+        else
+            recipientProcessNotForUsFrame(packet, header);
         cancelEvent(startRxTimer);
     }
     else if (isForUs(header))
         recipientProcessReceivedFrame(packet, header);
-    else {
-        EV_INFO << "This frame is not for us" << std::endl;
-        PacketDropDetails details;
-        details.setReason(NOT_ADDRESSED_TO_US);
-        emit(packetDropSignal, packet, &details);
-        delete packet;
-    }
+    else
+        recipientProcessNotForUsFrame(packet, header);
 }
 
 void Dcf::transmitFrame(Packet *packet, simtime_t ifs)
@@ -208,8 +198,16 @@ bool Dcf::isReceptionInProgress()
 
 void Dcf::recipientProcessReceivedFrame(Packet *packet, const Ptr<const Ieee80211MacHeader>& header)
 {
-    if (auto dataOrMgmtHeader = dynamicPtrCast<const Ieee80211DataOrMgmtHeader>(header))
+    if (auto dataOrMgmtHeader = dynamicPtrCast<const Ieee80211DataOrMgmtHeader>(header)) {
+        auto receiverAddress = dataOrMgmtHeader->getReceiverAddress();
+        if (receiverAddress.isBroadcast())
+            emit(receivedBroadcastPacketSignal, packet);
+        else if (receiverAddress.isMulticast())
+            emit(receivedMulticastPacketSignal, packet);
+        else
+            emit(receivedUnicastPacketSignal, packet);
         recipientAckProcedure->processReceivedFrame(packet, dataOrMgmtHeader, recipientAckPolicy, this);
+    }
     if (auto dataHeader = dynamicPtrCast<const Ieee80211DataHeader>(header))
         sendUp(recipientDataService->dataFrameReceived(packet, dataHeader));
     else if (auto mgmtHeader = dynamicPtrCast<const Ieee80211MgmtHeader>(header))
@@ -233,6 +231,16 @@ void Dcf::recipientProcessControlFrame(Packet *packet, const Ptr<const Ieee80211
         ctsProcedure->processReceivedRts(packet, rtsFrame, ctsPolicy, this);
     else
         throw cRuntimeError("Unknown control frame");
+}
+
+void Dcf::recipientProcessNotForUsFrame(Packet *packet, const Ptr<const Ieee80211MacHeader>& header)
+{
+    EV_INFO << "The received frame is not for us" << std::endl;
+    emit(receivedPacketNotForUsSignal, packet);
+    PacketDropDetails details;
+    details.setReason(NOT_ADDRESSED_TO_US);
+    emit(packetDropSignal, packet, &details);
+    delete packet;
 }
 
 FrameSequenceContext* Dcf::buildContext()
@@ -279,6 +287,13 @@ void Dcf::originatorProcessTransmittedFrame(Packet *packet)
     auto transmittedHeader = packet->peekHeader<Ieee80211MacHeader>();
     if (auto dataOrMgmtHeader = dynamicPtrCast<const Ieee80211DataOrMgmtHeader>(transmittedHeader)) {
         EV_INFO << "For the current frame exchange, we have CW = " << dcfChannelAccess->getCw() << " SRC = " << recoveryProcedure->getShortRetryCount(packet, dataOrMgmtHeader) << " LRC = " << recoveryProcedure->getLongRetryCount(packet, dataOrMgmtHeader) << " SSRC = " << stationRetryCounters->getStationShortRetryCount() << " and SLRC = " << stationRetryCounters->getStationLongRetryCount() << std::endl;
+        auto receiverAddress = dataOrMgmtHeader->getReceiverAddress();
+        if (receiverAddress.isBroadcast())
+            emit(receivedBroadcastPacketSignal, packet);
+        else if (receiverAddress.isMulticast())
+            emit(receivedMulticastPacketSignal, packet);
+        else
+            emit(receivedUnicastPacketSignal, packet);
         if (originatorAckPolicy->isAckNeeded(dataOrMgmtHeader)) {
             ackHandler->processTransmittedDataOrMgmtFrame(dataOrMgmtHeader);
         }
@@ -362,7 +377,7 @@ bool Dcf::isSentByUs(const Ptr<const Ieee80211MacHeader>& header) const
         return false;
 }
 
-void Dcf::corruptedFrameReceived()
+void Dcf::corruptedFrameReceived(Packet *packet)
 {
     if (frameSequenceHandler->isSequenceRunning()) {
         if (!startRxTimer->isScheduled()) {
@@ -370,6 +385,7 @@ void Dcf::corruptedFrameReceived()
             updateDisplayString();
         }
     }
+    emit(receivedCorruptPacketSignal, packet);
 }
 
 Dcf::~Dcf()

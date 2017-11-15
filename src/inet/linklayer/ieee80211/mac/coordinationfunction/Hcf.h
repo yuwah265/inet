@@ -142,6 +142,7 @@ class INET_API Hcf : public ICoordinationFunction, public IFrameSequenceHandler:
         virtual void recipientProcessReceivedFrame(Packet *packet, const Ptr<const Ieee80211MacHeader>& header);
         virtual void recipientProcessReceivedControlFrame(Packet *packet, const Ptr<const Ieee80211MacHeader>& header);
         virtual void recipientProcessReceivedManagementFrame(const Ptr<const Ieee80211MgmtHeader>& header);
+        virtual void recipientProcessNotForUsFrame(Packet *packet, const Ptr<const Ieee80211MacHeader>& header);
         virtual void recipientProcessTransmittedControlResponseFrame(const Ptr<const Ieee80211MacHeader>& header);
 
         // Originator
@@ -185,7 +186,7 @@ class INET_API Hcf : public ICoordinationFunction, public IFrameSequenceHandler:
         // ICoordinationFunction
         virtual void processUpperFrame(Packet *packet, const Ptr<const Ieee80211DataOrMgmtHeader>& header) override;
         virtual void processLowerFrame(Packet *packet, const Ptr<const Ieee80211MacHeader>& header) override;
-        virtual void corruptedFrameReceived() override;
+        virtual void corruptedFrameReceived(Packet *packet) override;
 
 };
 

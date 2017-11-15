@@ -115,6 +115,34 @@ AccessCategory Edcaf::getAccessCategory(const char *ac)
     throw cRuntimeError("Unknown Access Category = %s", ac);
 }
 
+void Edcaf::recipientProcessReceivedFrame(Packet *packet)
+{
+    auto header = packet->peekHeader<Ieee80211MacHeader>();
+    if (auto dataOrMgmtHeader = dynamicPtrCast<const Ieee80211DataOrMgmtHeader>(header)) {
+        auto receiverAddress = dataOrMgmtHeader->getReceiverAddress();
+        if (receiverAddress.isBroadcast())
+            emit(receivedBroadcastPacketSignal, packet);
+        else if (receiverAddress.isMulticast())
+            emit(receivedMulticastPacketSignal, packet);
+        else
+            emit(receivedUnicastPacketSignal, packet);
+    }
+}
+
+void Edcaf::originatorProcessTransmittedFrame(Packet *packet)
+{
+    auto header = packet->peekHeader<Ieee80211MacHeader>();
+    if (auto dataOrMgmtHeader = dynamicPtrCast<const Ieee80211DataOrMgmtHeader>(header)) {
+        auto receiverAddress = dataOrMgmtHeader->getReceiverAddress();
+        if (receiverAddress.isBroadcast())
+            emit(transmittedBroadcastPacketSignal, packet);
+        else if (receiverAddress.isMulticast())
+            emit(transmittedMulticastPacketSignal, packet);
+        else
+            emit(transmittedUnicastPacketSignal, packet);
+    }
+}
+
 void Edcaf::channelAccessGranted()
 {
     ASSERT(callback != nullptr);

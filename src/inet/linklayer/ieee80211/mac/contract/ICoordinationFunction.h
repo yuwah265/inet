@@ -34,7 +34,7 @@ class INET_API ICoordinationFunction
 
         virtual void processUpperFrame(Packet *packet, const Ptr<const Ieee80211DataOrMgmtHeader>& header) = 0;
         virtual void processLowerFrame(Packet *packet, const Ptr<const Ieee80211MacHeader>& header) = 0;
-        virtual void corruptedFrameReceived() = 0;
+        virtual void corruptedFrameReceived(Packet *packet) = 0;
 
 };
 

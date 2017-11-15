@@ -176,26 +176,16 @@ void Hcf::processLowerFrame(Packet *packet, const Ptr<const Ieee80211MacHeader>&
             frameSequenceHandler->processResponse(packet);
             updateDisplayString();
         }
-        else {
-            EV_INFO << "This frame is not for us" << std::endl;
-            PacketDropDetails details;
-            details.setReason(NOT_ADDRESSED_TO_US);
-            emit(packetDropSignal, packet, &details);
-            delete packet;
-        }
+        else
+            recipientProcessNotForUsFrame(packet, header);
         cancelEvent(startRxTimer);
     }
     else if (hcca->isOwning())
         throw cRuntimeError("Hcca is unimplemented!");
     else if (isForUs(header))
         recipientProcessReceivedFrame(packet, header);
-    else {
-        EV_INFO << "This frame is not for us" << std::endl;
-        PacketDropDetails details;
-        details.setReason(NOT_ADDRESSED_TO_US);
-        emit(packetDropSignal, packet, &details);
-        delete packet;
-    }
+    else
+        recipientProcessNotForUsFrame(packet, header);
 }
 
 void Hcf::channelGranted(IChannelAccess* channelAccess)
@@ -297,8 +287,16 @@ void Hcf::frameSequenceFinished()
 
 void Hcf::recipientProcessReceivedFrame(Packet *packet, const Ptr<const Ieee80211MacHeader>& header)
 {
-    if (auto dataOrMgmtHeader = dynamicPtrCast<const Ieee80211DataOrMgmtHeader>(header))
+    if (auto dataOrMgmtHeader = dynamicPtrCast<const Ieee80211DataOrMgmtHeader>(header)) {
+        auto receiverAddress = dataOrMgmtHeader->getReceiverAddress();
+        if (receiverAddress.isBroadcast())
+            emit(receivedBroadcastPacketSignal, packet);
+        else if (receiverAddress.isMulticast())
+            emit(receivedMulticastPacketSignal, packet);
+        else
+            emit(receivedUnicastPacketSignal, packet);
         recipientAckProcedure->processReceivedFrame(packet, dataOrMgmtHeader, check_and_cast<IRecipientAckPolicy*>(recipientAckPolicy), this);
+    }
     if (auto dataHeader = dynamicPtrCast<const Ieee80211DataHeader>(header)) {
         if (dataHeader->getType() == ST_DATA_WITH_QOS && recipientBlockAckAgreementHandler)
             recipientBlockAckAgreementHandler->qosFrameReceived(dataHeader, this);
@@ -349,6 +347,16 @@ void Hcf::recipientProcessReceivedManagementFrame(const Ptr<const Ieee80211MgmtH
     }
     else
         ; // Optional modules
+}
+
+void Hcf::recipientProcessNotForUsFrame(Packet *packet, const Ptr<const Ieee80211MacHeader>& header)
+{
+    EV_INFO << "The received frame is not for us" << std::endl;
+    emit(receivedPacketNotForUsSignal, packet);
+    PacketDropDetails details;
+    details.setReason(NOT_ADDRESSED_TO_US);
+    emit(packetDropSignal, packet, &details);
+    delete packet;
 }
 
 void Hcf::transmissionComplete(Packet *packet, const Ptr<const Ieee80211MacHeader>& header)
@@ -406,6 +414,7 @@ void Hcf::originatorProcessTransmittedFrame(Packet *packet)
     auto transmittedHeader = packet->peekHeader<Ieee80211MacHeader>();
     auto edcaf = edca->getChannelOwner();
     if (edcaf) {
+        edcaf->originatorProcessTransmittedFrame(packet);
         AccessCategory ac = edcaf->getAccessCategory();
         if (transmittedHeader->getReceiverAddress().isMulticast()) {
             edcaDataRecoveryProcedures[ac]->multicastFrameTransmitted();
@@ -735,7 +744,7 @@ bool Hcf::isSentByUs(const Ptr<const Ieee80211MacHeader>& header) const
         return false;
 }
 
-void Hcf::corruptedFrameReceived()
+void Hcf::corruptedFrameReceived(Packet *packet)
 {
     if (frameSequenceHandler->isSequenceRunning()) {
         if (!startRxTimer->isScheduled()) {
@@ -743,6 +752,7 @@ void Hcf::corruptedFrameReceived()
             updateDisplayString();
         }
     }
+    emit(receivedCorruptPacketSignal, packet);
 }
 
 Hcf::~Hcf()

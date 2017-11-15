@@ -37,6 +37,12 @@ module Edcaf
 
         @class(Edcaf);
         @display("i=block/queue");
+        @signal[transmittedUnicastPacket](type=Packet);
+        @signal[transmittedMulticastPacket](type=Packet);
+        @signal[transmittedBroadcastPacket](type=Packet);
+        @statistic[transmittedUnicastPacket](title="transmitted unicast packet"; source=transmittedUnicastPacket; record=count,sum(packetBytes); interpolationmode=none);
+        @statistic[transmittedMulticastPacket](title="transmitted multicast packet"; source=transmittedMulticastPacket; record=count,sum(packetBytes); interpolationmode=none);
+        @statistic[transmittedBroadcastPacket](title="transmitted broadcast packet"; source=transmittedBroadcastPacket; record=count,sum(packetBytes); interpolationmode=none);
 
     submodules:
         contention: Contention {

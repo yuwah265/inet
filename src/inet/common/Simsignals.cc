@@ -95,6 +95,15 @@ simsignal_t NF_OVERLAY_NODE_LEAVE = cComponent::registerSignal("NF_OVERLAY_NODE_
 
 simsignal_t packetDropSignal = cComponent::registerSignal("packetDrop");
 
+simsignal_t transmittedUnicastPacketSignal = cComponent::registerSignal("transmittedUnicastPacket");
+simsignal_t transmittedMulticastPacketSignal = cComponent::registerSignal("transmittedMulticastPacket");
+simsignal_t transmittedBroadcastPacketSignal = cComponent::registerSignal("transmittedBroadcastPacket");
+simsignal_t receivedUnicastPacketSignal = cComponent::registerSignal("receivedUnicastPacket");
+simsignal_t receivedMulticastPacketSignal = cComponent::registerSignal("receivedMulticastPacket");
+simsignal_t receivedBroadcastPacketSignal = cComponent::registerSignal("receivedBroadcastPacket");
+simsignal_t receivedCorruptPacketSignal = cComponent::registerSignal("receivedCorruptPacket");
+simsignal_t receivedPacketNotForUsSignal = cComponent::registerSignal("receivedPacketNotForUs");
+
 void printSignalBanner(simsignal_t signalID, const cObject *obj)
 {
     EV << "** Signal at T=" << simTime()

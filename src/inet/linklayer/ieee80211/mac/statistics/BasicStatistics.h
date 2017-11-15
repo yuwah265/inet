@@ -26,39 +26,11 @@ namespace ieee80211 {
 /**
  * A basic implementation of statistics collection (IStatistics).
  */
-class INET_API BasicStatistics : /*public IStatistics, */public cSimpleModule
+class INET_API BasicStatistics : public IStatistics, public cSimpleModule
 {
-//    private:
-//        MacUtils *utils = nullptr;
-//        IRateControl *rateControl = nullptr; //TODO maybe there should be a listener list instead of a direct pointer here
-//
-//        long numRetry;
-//        long numSentWithoutRetry;
-//        long numGivenUp;
-//        long numCollision;
-//        long numSent;
-//        long numSentBroadcast;
-//
-//        long numReceivedUnicast;
-//        long numReceivedMulticast;
-//        long numReceivedBroadcast;
-//        long numReceivedNotForUs;
-//        long numReceivedErroneous;
-//
-//    protected:
-//        virtual void initialize() override;
-//        virtual void finish() override;
-//        virtual void resetStatistics();
-//
-//    public:
-//        virtual void setMacUtils(MacUtils *utils) override;
-//        virtual void setRateControl(IRateControl *rateControl) override;
-//        virtual void frameTransmissionSuccessful(const Ptr<const Ieee80211DataOrMgmtHeader>& header, int retryCount) override;
-//        virtual void frameTransmissionUnsuccessful(const Ptr<const Ieee80211DataOrMgmtHeader>& header, int retryCount) override;
-//        virtual void frameTransmissionUnsuccessfulGivingUp(const Ptr<const Ieee80211DataOrMgmtHeader>& header, int retryCount) override;
-//        virtual void frameTransmissionGivenUp(const Ptr<const Ieee80211DataOrMgmtHeader>& header) override;
-//        virtual void frameReceived(const Ptr<const Ieee80211MacHeader>& header) override;
-//        virtual void erroneousFrameReceived() override;
+    protected:
+        virtual void initialize() override;
+        virtual void finish() override;
 };
 
 }  // namespace ieee80211

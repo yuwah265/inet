@@ -33,14 +33,6 @@ class INET_API IStatistics
 {
     public:
         ~IStatistics() { }
-
-        // events to compute statistics from; TODO there should be many more, e.g. about the contention, queueing time, etc
-        virtual void frameTransmissionSuccessful(const Ptr<const Ieee80211DataOrMgmtHeader>& header, int retryCount) = 0;
-        virtual void frameTransmissionUnsuccessful(const Ptr<const Ieee80211DataOrMgmtHeader>& header, int retryCount) = 0;
-        virtual void frameTransmissionUnsuccessfulGivingUp(const Ptr<const Ieee80211DataOrMgmtHeader>& header, int retryCount) = 0;
-        virtual void frameTransmissionGivenUp(const Ptr<const Ieee80211DataOrMgmtHeader>& header) = 0;
-        virtual void frameReceived(const Ptr<const Ieee80211MacHeader>& header) = 0;
-        virtual void erroneousFrameReceived() = 0;
 };
 
 }  // namespace ieee80211

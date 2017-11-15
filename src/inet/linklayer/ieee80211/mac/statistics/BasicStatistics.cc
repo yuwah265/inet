@@ -25,42 +25,12 @@ namespace ieee80211 {
 
 Define_Module(BasicStatistics);
 
-//void BasicStatistics::initialize()
-//{
-//    resetStatistics();
-//
-//    WATCH(numRetry);
-//    WATCH(numSentWithoutRetry);
-//    WATCH(numGivenUp);
-//    WATCH(numCollision);
-//    WATCH(numSent);
-//    WATCH(numSentBroadcast);
-//
-//    WATCH(numReceivedUnicast);
-//    WATCH(numReceivedBroadcast);
-//    WATCH(numReceivedMulticast);
-//    WATCH(numReceivedNotForUs);
-//    WATCH(numReceivedErroneous);
-//}
-//
-//void BasicStatistics::resetStatistics()
-//{
-//    numRetry = 0;
-//    numSentWithoutRetry = 0;
-//    numGivenUp = 0;
-//    numCollision = 0;
-//    numSent = 0;
-//    numSentBroadcast = 0;
-//
-//    numReceivedUnicast = 0;
-//    numReceivedMulticast = 0;
-//    numReceivedBroadcast = 0;
-//    numReceivedNotForUs = 0;
-//    numReceivedErroneous = 0;
-//}
-//
-//void BasicStatistics::finish()
-//{
+void BasicStatistics::initialize()
+{
+}
+
+void BasicStatistics::finish()
+{
 //     transmit statistics
 //    recordScalar("number of collisions", numCollision);
 //    recordScalar("number of internal collisions", numInternalCollision);
@@ -96,70 +66,7 @@ Define_Module(BasicStatistics);
 //        std::string th = "numDropped AC " + os.str();
 //        recordScalar(th.c_str(), numDropped(i));
 //    }
-//
-//    // receive statistics
-//    recordScalar("numReceivedUnicast", numReceivedUnicast);
-//    recordScalar("numReceivedBroadcast", numReceivedBroadcast);
-//    recordScalar("numReceivedMulticast", numReceivedMulticast);
-//    recordScalar("numReceivedNotForUs", numReceivedNotForUs);
-//    recordScalar("numReceivedErroneous", numReceivedErroneous);
-//}
-//
-//void BasicStatistics::setMacUtils(MacUtils *utils)
-//{
-//    this->utils = utils;
-//}
-//
-//void BasicStatistics::setRateControl(IRateControl *rateControl)
-//{
-//    this->rateControl = rateControl;
-//}
-//
-//void BasicStatistics::frameTransmissionSuccessful(const Ptr<const Ieee80211DataOrMgmtHeader>& header, int retryCount)
-//{
-//    if (rateControl)
-//        rateControl->frameTransmitted(frame, utils->getFrameMode(frame), retryCount, true, false);
-//}
-//
-//void BasicStatistics::frameTransmissionUnsuccessful(const Ptr<const Ieee80211DataOrMgmtHeader>& header, int retryCount)
-//{
-//    if (rateControl)
-//        rateControl->frameTransmitted(frame, utils->getFrameMode(frame), retryCount, false, false);
-//}
-//
-//void BasicStatistics::frameTransmissionUnsuccessfulGivingUp(const Ptr<const Ieee80211DataOrMgmtHeader>& header, int retryCount)
-//{
-//    if (rateControl)
-//        rateControl->frameTransmitted(frame, utils->getFrameMode(frame), retryCount, false, true); //TODO for the last frame, both Unsuccessful() and GivenUp() will be called -- duplicate call!
-//}
-//
-//void BasicStatistics::frameTransmissionGivenUp(const Ptr<const Ieee80211DataOrMgmtHeader>& header)
-//{
-//}
-//
-//void BasicStatistics::frameReceived(const Ptr<const Ieee80211MacHeader>& header)
-//{
-//    if (dynamic_cast<const Ptr<const Ieee80211DataOrMgmtHeader>& >(frame)) {
-//        if (!utils->isForUs(frame))
-//            numReceivedNotForUs++;
-//        else if (utils->isBroadcast(frame))
-//            numReceivedBroadcast++;
-//        else if (utils->isBroadcastOrMulticast(frame))
-//            numReceivedMulticast++;
-//        else
-//            numReceivedUnicast++;
-//    }
-//
-//    if (rateControl) {
-//        auto receptionIndication = check_and_cast<Ieee80211ReceptionIndication*>(frame->getControlInfo());
-//        rateControl->frameReceived(frame, receptionIndication);
-//    }
-//}
-//
-//void BasicStatistics::erroneousFrameReceived()
-//{
-//    numReceivedErroneous++;
-//}
+}
 
 }  // namespace ieee80211
 }  // namespace inet

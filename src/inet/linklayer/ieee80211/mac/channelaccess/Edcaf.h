@@ -68,6 +68,9 @@ class INET_API Edcaf : public IChannelAccess, public IContention::ICallback, pub
         virtual void calculateTimingParameters();
 
     public:
+        void recipientProcessReceivedFrame(Packet *packet);
+        void originatorProcessTransmittedFrame(Packet *packet);
+
         // IChannelAccess
 
         virtual void requestChannel(IChannelAccess::ICallback *callback) override;

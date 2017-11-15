@@ -49,6 +49,22 @@ module Dcf
         @display("i=block/queue");
         @signal[linkBreak](type=Packet);
         @signal[packetDrop](type=Packet);
+        @signal[transmittedUnicastPacket](type=Packet);
+        @signal[transmittedMulticastPacket](type=Packet);
+        @signal[transmittedBroadcastPacket](type=Packet);
+        @signal[receivedUnicastPacket](type=Packet);
+        @signal[receivedMulticastPacket](type=Packet);
+        @signal[receivedBroadcastPacket](type=Packet);
+        @signal[receivedCorruptPacket](type=Packet);
+        @signal[receivedPacketNotForUs](type=Packet);
+        @statistic[transmittedUnicastPacket](title="transmitted unicast packet"; source=transmittedUnicastPacket; record=count,sum(packetBytes); interpolationmode=none);
+        @statistic[transmittedMulticastPacket](title="transmitted multicast packet"; source=transmittedMulticastPacket; record=count,sum(packetBytes); interpolationmode=none);
+        @statistic[transmittedBroadcastPacket](title="transmitted broadcast packet"; source=transmittedBroadcastPacket; record=count,sum(packetBytes); interpolationmode=none);
+        @statistic[receivedUnicastPacket](title="received unicast packet"; source=receivedUnicastPacket; record=count,sum(packetBytes); interpolationmode=none);
+        @statistic[receivedMulticastPacket](title="received multicast packet"; source=receivedMulticastPacket; record=count,sum(packetBytes); interpolationmode=none);
+        @statistic[receivedBroadcastPacket](title="received broadcast packet"; source=receivedBroadcastPacket; record=count,sum(packetBytes); interpolationmode=none);
+        @statistic[receivedCorruptPacket](title="received corrupt packet"; source=receivedCorruptPacket; record=count; interpolationmode=none);
+        @statistic[receivedPacketNotForUs](title="received packet not for us"; source=receivedPacketNotForUs; record=count; interpolationmode=none);
 
     submodules:
         channelAccess: Dcaf {

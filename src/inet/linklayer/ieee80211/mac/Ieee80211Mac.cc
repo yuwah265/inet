@@ -191,9 +191,13 @@ void Ieee80211Mac::handleLowerPacket(Packet *packet)
     }
     else { // corrupted frame received
         if (mib->qos)
-            hcf->corruptedFrameReceived();
+            hcf->corruptedFrameReceived(packet);
         else
-            dcf->corruptedFrameReceived();
+            dcf->corruptedFrameReceived(packet);
+        PacketDropDetails details;
+        details.setReason(INCORRECTLY_RECEIVED);
+        emit(packetDropSignal, packet, &details);
+        delete packet;
     }
 }
 

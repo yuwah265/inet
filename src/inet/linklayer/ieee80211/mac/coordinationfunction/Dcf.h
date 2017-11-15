@@ -111,6 +111,7 @@ class INET_API Dcf : public ICoordinationFunction, public IFrameSequenceHandler:
 
         virtual void recipientProcessReceivedFrame(Packet *packet, const Ptr<const Ieee80211MacHeader>& header);
         virtual void recipientProcessControlFrame(Packet *packet, const Ptr<const Ieee80211MacHeader>& header);
+        virtual void recipientProcessNotForUsFrame(Packet *packet, const Ptr<const Ieee80211MacHeader>& header);
         virtual void recipientProcessTransmittedControlResponseFrame(const Ptr<const Ieee80211MacHeader>& header);
 
     protected:
@@ -142,7 +143,7 @@ class INET_API Dcf : public ICoordinationFunction, public IFrameSequenceHandler:
         // ICoordinationFunction
         virtual void processUpperFrame(Packet *packet, const Ptr<const Ieee80211DataOrMgmtHeader>& header) override;
         virtual void processLowerFrame(Packet *packet, const Ptr<const Ieee80211MacHeader>& header) override;
-        virtual void corruptedFrameReceived() override;
+        virtual void corruptedFrameReceived(Packet *packet) override;
 };
 
 } /* namespace ieee80211 */
