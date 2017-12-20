@@ -36,7 +36,8 @@ class INET_API Signal : public cPacket, public ISignal
     Signal(const ITransmission *transmission);
     Signal(const Signal& other);
 
-    virtual Signal *dup() const override { return new Signal(*this); }
+    virtual Signal *dup() const override;// { return new Signal(*this); }
+    //virtual Signal *privateDup() const override;
 
     virtual std::ostream& printToStream(std::ostream& stream, int level) const override;
 

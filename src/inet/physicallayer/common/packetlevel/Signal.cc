@@ -34,6 +34,16 @@ Signal::Signal(const Signal& other) :
 {
 }
 
+Signal *Signal::dup() const
+{
+    Signal *clone = new Signal(*this);
+
+    const cObject *transmissionObj = dynamic_cast<const cObject *>(transmission);
+    clone->transmission = dynamic_cast<const ITransmission *>(transmissionObj->dup());
+
+    return clone;
+}
+
 std::ostream& Signal::printToStream(std::ostream& stream, int level) const
 {
     return stream << (cPacket *)this;
