@@ -64,7 +64,7 @@ class Ipv6HopByHopOptionsHeader extends Ipv6ExtensionHeader
 //
 class Ipv6RoutingHeader extends Ipv6ExtensionHeader
 {
-    @customize;
+    @customize;     // updating byteLength when 'address' array size changed
     extensionType = IP_PROT_IPv6EXT_ROUTING;
     byteLength = 8;
     //byteLength = 8+16*getAddressArraySize() when routingType == 0
