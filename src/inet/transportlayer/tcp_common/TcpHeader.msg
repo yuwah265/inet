@@ -100,8 +100,17 @@ class SackItem extends cObject
 
 class Sack extends SackItem
 {
-    @customize;
 }
+
+cplusplus(Sack) {{
+  public:
+    Sack(unsigned int start_par, unsigned int end_par) { setSegment(start_par, end_par); }
+    virtual bool empty() const;
+    virtual bool contains(const Sack& other) const;
+    virtual void clear();
+    virtual void setSegment(unsigned int start_par, unsigned int end_par);
+    virtual std::string str() const override;
+}}
 
 // Header Options (optional):
 class TcpOption extends cObject

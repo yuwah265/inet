@@ -37,22 +37,6 @@ inline uint32 seqMin(uint32 a, uint32 b) { return ((b - a) < (1UL << 31)) ? a : 
 inline uint32 seqMax(uint32 a, uint32 b) { return ((a - b) < (1UL << 31)) ? a : b; }
 //@}
 
-class INET_API Sack : public Sack_Base
-{
-  public:
-    Sack() : Sack_Base() {}
-    Sack(unsigned int start_par, unsigned int end_par) { setSegment(start_par, end_par); }
-    Sack(const Sack& other) : Sack_Base(other) {}
-    Sack& operator=(const Sack& other) { Sack_Base::operator=(other); return *this; }
-    virtual Sack *dup() const override { return new Sack(*this); }
-    // ADD CODE HERE to redefine and implement pure virtual functions from Sack_Base
-    virtual bool empty() const;
-    virtual bool contains(const Sack& other) const;
-    virtual void clear();
-    virtual void setSegment(unsigned int start_par, unsigned int end_par);
-    virtual std::string str() const override;
-};
-
 /**
  * Represents a TCP segment. More info in the TcpHeader.msg file
  * (and the documentation generated from it).
