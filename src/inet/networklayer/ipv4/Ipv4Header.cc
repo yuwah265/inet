@@ -23,11 +23,6 @@ namespace inet {
 
 Register_Class(Ipv4Header);
 
-int Ipv4Header::getTotalLengthField() const
-{
-    return totalLengthField;
-}
-
 TlvOptionBase *Ipv4Header::findMutableOptionByType(short int optionType, int index)
 {
     int i = options.findByType(optionType, index);

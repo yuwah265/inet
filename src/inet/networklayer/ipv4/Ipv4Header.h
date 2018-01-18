@@ -42,12 +42,6 @@ class INET_API Ipv4Header : public Ipv4Header_Base
     virtual Ipv4Header *dup() const override { return new Ipv4Header(*this); }
 
     /**
-     * getter/setter for totalLength field in datagram
-     * if set to -1, then getter returns getByteLength()
-     */
-    virtual int getTotalLengthField() const override;
-
-    /**
      * Returns bits 0-5 of the Type of Service field, a value in the 0..63 range
      */
     virtual int getDiffServCodePoint() const override { return getTypeOfService() & 0x3f; }
