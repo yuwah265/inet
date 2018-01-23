@@ -193,6 +193,10 @@ const IIeee80211Mode *Ieee80211ModeSet::findMode(bps bitrate) const
 {
     for (int index = 0; index < (int)entries.size(); index++) {
         const IIeee80211Mode *mode = entries[index].mode;
+        auto ofdmMode = dynamic_cast<const Ieee80211OfdmMode *>(mode);
+        if (ofdmMode) {
+            std::cout << "GROSS RATE: " << (int)ofdmMode->getDataMode()->getGrossBitrate().get() << ", NET RATE: " << (int)ofdmMode->getDataMode()->getNetBitrate().get() << std::endl;
+        }
         if (mode->getDataMode()->getNetBitrate() == bitrate)
             return entries[index].mode;
     }

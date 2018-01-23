@@ -62,7 +62,9 @@ Ieee80211OfdmDataMode::Ieee80211OfdmDataMode(const Ieee80211OfdmCode *code, cons
 bps Ieee80211OfdmModeBase::computeGrossBitrate(const Ieee80211OfdmModulation *modulation) const
 {
     int codedBitsPerOFDMSymbol = modulation->getSubcarrierModulation()->getCodeWordSize() * getNumberOfDataSubcarriers();
+    std::cout << "SYMBOL INTERVAL " << getSymbolInterval() << " " << getSymbolInterval().raw() << std::endl;
     return bps(codedBitsPerOFDMSymbol / getSymbolInterval());
+//    return bps(codedBitsPerOFDMSymbol / getSymbolInterval().inUnit(SimTimeUnit::SIMTIME_US) * 1000000);
 }
 
 bps Ieee80211OfdmModeBase::computeNetBitrate(bps grossBitrate, const Ieee80211OfdmCode *code) const
